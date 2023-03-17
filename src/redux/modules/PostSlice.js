@@ -24,6 +24,9 @@ export const __getPostList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.get("http://localhost:3001/posts/list");
+      //http://localhost:3001/posts/list 안됨
+      //http://localhost:3001/posts 됨
+      //http://localhost:3001 안됨
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -46,7 +49,6 @@ export const __addPost = createAsyncThunk(
         image: payload.image,
         content: payload.content,
       });
-      // console.log(response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -59,6 +61,21 @@ export const PostSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    //get
+    [__getPostList.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    [__getPostList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.posts = action.payload;
+    },
+    [__getPostList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    },
     //create
     [__addPost.pending]: (state, action) => {
       state.isLoading = true;
@@ -78,4 +95,4 @@ export const PostSlice = createSlice({
 });
 
 export default PostSlice.reducer;
-export const { addPost } = PostSlice.actions;
+export const { addPost, getPostList } = PostSlice.actions;

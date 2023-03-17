@@ -9,7 +9,7 @@ import nextId from "react-id-generator";
 function Post() {
   const id = nextId();
   const dispatch = useDispatch();
-  const { isLoading, error, posts } = useSelector(state => {
+  const { posts } = useSelector(state => {
     return state.posts;
   });
 
