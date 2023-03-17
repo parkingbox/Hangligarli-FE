@@ -1,0 +1,23 @@
+{
+  "posts": [
+    {
+      "id": 0,
+      "title": "할리갈리",
+      "level": "하",
+      "time": 10,
+      "minperson": 2,
+      "maxperson": 4,
+      "image": "url",
+      "content": "항리갈리는 할리갈리다"
+    },
+    {
+      "id": "id21",
+      "title": "ㄴ",
+      "level": "hard",
+      "time": 122,
+      "minperson": "1",
+      "maxperson": "2",
+      "content": "ㄴ"
+    }
+  ]
+}
