@@ -9,11 +9,9 @@ import nextId from "react-id-generator";
 function Post() {
   const id = nextId();
   const dispatch = useDispatch();
-  // const posts = useSelector(state => state.posts);
   const { isLoading, error, posts } = useSelector(state => {
     return state.posts;
   });
-  console.log(posts, "Post.jsx - posts");
 
   //time
   const [hour, setHour] = useState();
@@ -25,24 +23,18 @@ function Post() {
     setMinute(e.target.value);
   };
   const time = hour * Number(60) + Number(minute);
-  console.log(time);
 
   //image
-  // const onChangeImageHandler = e => {
-  //   e.preventDefault();
-  //   if (e.target.files) {
-  //     const uploadFile = e.target.files[0];
-  //     const formData = new FormData();
-  //     console.log(formData);
-  //     formData.append("files", uploadFile);
-  //   }
-  // };
+  const [image, setImage] = useState();
+  const onChangeImageHandler = e => {
+    e.preventDefault();
+    setImage(e.target.value);
+  };
 
   const [title, onChangeTitleHandler] = useInput("");
   const [level, onChangeLevelHandler] = useInput("");
   const [minperson, onChangeMinPersonHandler] = useInput();
   const [maxperson, onChangeMaxPersonHandler] = useInput();
-  // const [image, onChangeImageHandler] = useInput("");
   const [content, onChangeContentHandler] = useInput("");
 
   const [post, setPost] = useState({
@@ -52,7 +44,7 @@ function Post() {
     time: "",
     minperson: 0,
     maxperson: 0,
-    // image: "",
+    image: "",
     content: "",
   });
 
@@ -63,12 +55,10 @@ function Post() {
       time,
       minperson,
       maxperson,
-      // image,
+      image,
       content,
     });
-  }, [title, level, time, minperson, maxperson, content]);
-  //image추가
-  // console.log(image);
+  }, [title, level, time, image, minperson, maxperson, content]);
 
   const onSubmitHandler = event => {
     event.preventDefault();
@@ -81,11 +71,10 @@ function Post() {
       time,
       minperson: 0,
       maxperson: 0,
-      // image: "",
+      image: "",
       content: "",
     });
   };
-  console.log(post, "Post.jsx - post");
 
   return (
     <div>
@@ -159,12 +148,12 @@ function Post() {
 
         <div>
           <label>게임 이미지</label>
-          <Input
-            type="file"
+          <input
+            type="text"
             accept="image/jpg,image/png,image/jpeg,image/gif"
             name="image"
-            // value={image}
-            // onChange={onChangeImageHandler}
+            value={image}
+            onChange={onChangeImageHandler}
           />
         </div>
 
@@ -192,7 +181,11 @@ function Post() {
               <div>{post.time}</div>
               <div>{post.minperson}</div>
               <div>{post.maxperson}</div>
-              <div>{post.image}</div>
+              <img
+                style={{ width: "200px", height: "200px" }}
+                src={post.image}
+                alt="게임 이미지"
+              />
               <div>{post.content}</div>
             </div>
           );

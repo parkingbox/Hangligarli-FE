@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 function PostList() {
   const posts = useSelector(state => state.posts);
-  console.log(posts);
+  //   console.log(posts);
 
   return <div>PostList</div>;
 }

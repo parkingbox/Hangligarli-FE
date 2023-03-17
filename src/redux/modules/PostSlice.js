@@ -5,13 +5,15 @@ const initialState = {
   posts: [
     {
       id: 0,
-      title: "",
-      level: "",
-      time: 0,
-      minperson: 0,
-      maxperson: 0,
-      image: "",
-      content: "",
+      title: "할리갈리",
+      level: "하",
+      time: 5,
+      minperson: 2,
+      maxperson: 3,
+      image:
+        "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
+      content:
+        "항리갈리할리갈리항리갈리할리갈리항리갈리할리갈리항리갈리할리갈리",
     },
   ],
 };
@@ -44,6 +46,7 @@ export const __addPost = createAsyncThunk(
         image: payload.image,
         content: payload.content,
       });
+      // console.log(response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
