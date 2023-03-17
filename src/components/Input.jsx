@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const NInput = ({ type, placeholder, value, onChange, name }) => {
+const Input = ({ type, placeholder, value, onChange, name }) => {
   return (
     <StyledInput
       type={type}
@@ -25,4 +25,4 @@ const StyledInput = styled.input`
   }
 `;
 
-export default NInput;
+export default Input;

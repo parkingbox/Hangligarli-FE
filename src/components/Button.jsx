@@ -8,8 +8,10 @@ function Button({ children, ...rest }) {
 const StButton = styled.button`
   background-color: white;
   border: 1px solid lightgray;
-  width: 50px;
+  width: 100px;
   height: 30px;
+  cursor: pointer;
+  border-radius: 5px;
 `;
 
 export default Button;
