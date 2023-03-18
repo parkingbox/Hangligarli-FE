@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { __addPost } from "../redux/modules/PostSlice";
 import Button from "./../components/Button";
 import Input from "./../components/Input";
