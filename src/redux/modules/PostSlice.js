@@ -103,7 +103,7 @@ export const __updatePost = createAsyncThunk(
           content: payload.content,
         }
       );
-      console.log(response);
+      // console.log(response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

@@ -50,19 +50,56 @@ function Update() {
     image: "",
     content: "",
   });
+  console.log(updatePost);
 
   //3. 2번에 의해 덮어씌워진 1번 updatePost값이 onChange로 변경되면 의존성배열로 감지 -> dispatch에 사용
   useEffect(() => {
-    setUpdatePost({
-      title,
-      level,
-      time,
-      minperson,
-      maxperson,
-      image,
-      content,
-    });
-  }, [title, level, time, image, minperson, maxperson, content]);
+    // setUpdatePost({
+    //   id: post.id,
+    //   title,
+    //   level,
+    //   time,
+    //   minperson,
+    //   maxperson,
+    //   image,
+    //   content,
+    // });
+    if (title) {
+      setUpdatePost(prev => {
+        return { ...prev, title };
+      });
+    }
+    if (level) {
+      setUpdatePost(prev => {
+        return { ...prev, level };
+      });
+    }
+    if (time) {
+      setUpdatePost(prev => {
+        return { ...prev, time };
+      });
+    }
+    if (image) {
+      setUpdatePost(prev => {
+        return { ...prev, image };
+      });
+    }
+    if (minperson) {
+      setUpdatePost(prev => {
+        return { ...prev, minperson };
+      });
+    }
+    if (maxperson) {
+      setUpdatePost(prev => {
+        return { ...prev, maxperson };
+      });
+    }
+    if (content) {
+      setUpdatePost(prev => {
+        return { ...prev, content };
+      });
+    }
+  }, [post, title, level, time, image, minperson, maxperson, content]);
 
   //2. 기본적으로 input값에 들어가있어야 하는 기존의 input data => 1번 updatePost값이 됨
   useEffect(() => {
@@ -145,7 +182,7 @@ function Update() {
           <Input
             type="Number"
             name="minute"
-            value={updatePost.minute}
+            value={minute}
             onChange={onChangeMinuteHandler}
           />
           <span>분</span>
