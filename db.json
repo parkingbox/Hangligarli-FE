@@ -1,34 +1,44 @@
 {
   "posts": [
     {
-      "id": 0,
-      "title": "할리갈리",
-      "level": "하",
-      "time": 10,
-      "minperson": 2,
-      "maxperson": 4,
-      "image": "url",
-      "content": "항리갈리는 할리갈리다"
-    },
-    {
-      "id": "id4",
-      "title": "",
-      "level": "",
-      "time": null,
-      "minperson": "",
-      "maxperson": "",
-      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
-      "content": ""
-    },
-    {
-      "id": "id54",
-      "title": "ㄴ",
+      "id": "id130",
+      "title": "수정3",
       "level": "Normal",
-      "time": 62,
+      "time": 61,
       "minperson": "1",
       "maxperson": "2",
       "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
-      "content": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ"
+      "content": "수정3수정3수정3"
+    },
+    {
+      "id": "id122",
+      "title": "항리갈리",
+      "level": "veryhard",
+      "time": 100,
+      "minperson": "2",
+      "maxperson": "3",
+      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9C.png",
+      "content": "종을 엄청 빨리 치세요"
+    },
+    {
+      "id": "id200",
+      "title": "항해리갈리",
+      "level": "veryhard",
+      "time": null,
+      "minperson": "1",
+      "maxperson": "5",
+      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
+      "content": "종을 엄청엄청 빨리 쳐보아요"
+    },
+    {
+      "id": "id190",
+      "title": "할리와 갈갈이",
+      "level": "Normal",
+      "time": 61,
+      "minperson": "1",
+      "maxperson": "1",
+      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
+      "content": "종을 쳐요"
     }
   ]
 }

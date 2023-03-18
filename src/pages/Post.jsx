@@ -5,13 +5,13 @@ import Button from "./../components/Button";
 import Input from "./../components/Input";
 import useInput from "../hooks/useInput";
 import nextId from "react-id-generator";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Post() {
   const id = nextId();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { posts } = useSelector(state => {
-    return state.posts;
-  });
 
   //time
   const [hour, setHour] = useState();
@@ -63,6 +63,8 @@ function Post() {
   const onSubmitHandler = event => {
     event.preventDefault();
 
+    navigate("/");
+
     dispatch(__addPost({ ...post, id }));
     setPost({
       id: 0,
@@ -78,6 +80,7 @@ function Post() {
 
   return (
     <div>
+      <Link to={"/"}>홈</Link>
       <form onSubmit={onSubmitHandler}>
         {/* game title */}
         <div>
@@ -99,10 +102,10 @@ function Post() {
             value={level}
             onChange={onChangeLevelHandler}
           >
-            <option value="easy">하</option>
-            <option value="Normal">중</option>
-            <option value="hard">상</option>
-            <option value="veryhard">최상</option>
+            <option value="easy">easy</option>
+            <option value="Normal">Normal</option>
+            <option value="hard">hard</option>
+            <option value="veryhard">veryhard</option>
           </select>
         </div>
 
@@ -170,27 +173,6 @@ function Post() {
 
         <Button>등록하기</Button>
       </form>
-
-      <div>
-        {posts.map(post => {
-          return (
-            <div key={post.id}>
-              <div>{post.id}</div>
-              <div>{post.title}</div>
-              <div>{post.level}</div>
-              <div>{post.time}</div>
-              <div>{post.minperson}</div>
-              <div>{post.maxperson}</div>
-              <img
-                style={{ width: "200px", height: "200px" }}
-                src={post.image}
-                alt="게임 이미지"
-              />
-              <div>{post.content}</div>
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 }
