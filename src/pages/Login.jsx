@@ -1,54 +1,91 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
-import Header from "../components/Header";
+import swal from "sweetalert";
+
+import apis from "../api/api";
+import { cookies } from "../shared/cookie";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+
   const [user, setUser] = useState({
-    userid: "",
+    username: "",
     password: "",
   });
 
+  const changeInputHandler = (event) => {
+    const { value, name } = event.target;
+    setUser((old) => {
+      return { ...old, [name]: value };
+    });
+  };
+
+  const onSunmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await apis.post("/api/users/login", user);
+      cookies.set("token", res.headers.authorization.substr(7), {
+        path: "/",
+      });
+      navigate("/");
+      if (res.data.statusCode === 200) {
+        swal({ title: res.data.message, icon: "success", button: "확인" });
+      }
+      if (res.data.statusCode === 400) {
+        swal({ title: res.data.message, icon: "fail", button: "확인" });
+      }
+      if (res.data.statusCode === 404) {
+        swal(res.data.message);
+      }
+    } catch (e) {
+      swal("아이디 비밀번호를 확인해주세요.");
+    }
+  };
+
+  useEffect(() => {
+    const token = cookies.get("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <>
-      <Header></Header>
       <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
         <h1>로그인</h1>
-        <FormWrap>
+        <FormWrap onSubmit={onSunmitHandler}>
           <label>로그인 ID</label>
           <Input
-            width="366px"
-            height="30px"
             placeholder="ID를 입력하세요."
-            autoFocus
             required
-            value={user.userid}
+            value={user.username}
+            name="username"
             style={{ margin: "5px 0 5px 0" }}
+            onChange={changeInputHandler}
           />
 
           <label>비밀번호</label>
           <Input
-            width="366px"
-            height="30px"
             placeholder="비밀번호를 입력하세요."
             type="password"
-            required
+            name="password"
             value={user.password}
             style={{ margin: "5px 0 0 0" }}
+            onChange={changeInputHandler}
           />
           <ButtonWrap>
             <Button style={{ height: "50px" }}>로그인</Button>
           </ButtonWrap>
         </FormWrap>
-        <RedirectSignupWrap>
+        <SignupWrap>
           <p>저희가 처음이신가요?</p>
-          <RedirectLink to="/signup">회원가입</RedirectLink>
-        </RedirectSignupWrap>
+          <SignLink to="/signup">회원가입</SignLink>
+        </SignupWrap>
       </Wrapper>
     </>
   );
@@ -76,14 +113,14 @@ const ButtonWrap = styled.div`
   justify-content: center;
 `;
 
-const RedirectSignupWrap = styled.div`
+const SignupWrap = styled.div`
   display: flex;
   grid-column-gap: 16px;
   justify-content: center;
   align-items: center;
 `;
 
-const RedirectLink = styled(Link)`
+const SignLink = styled(Link)`
   color: black;
   text-decoration-line: underline;
 `;
