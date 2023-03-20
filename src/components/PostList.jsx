@@ -27,7 +27,7 @@ function PostList() {
     <StPostListComponents>
       <h2>BOARDGAME LISTS</h2>
       <StPostListWrap>
-        {posts.map(post => {
+        {posts.data?.map(post => {
           return (
             <StPostComponent key={post.id}>
               <div>

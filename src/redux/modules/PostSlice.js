@@ -1,33 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import apis, { api } from "../../api/api";
 
 const initialState = {
-  posts: [
-    {
-      id: 0,
-      title: "할리갈리",
-      level: "하",
-      time: 5,
-      minperson: 2,
-      maxperson: 3,
-      image:
-        "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
-      content: "항리갈리할리갈리항리",
-    },
-  ],
+  posts: [],
   isLoading: false,
   isError: false,
   error: null,
-  post: {
-    id: 0,
-    title: "",
-    level: "",
-    time: "",
-    minperson: 0,
-    maxperson: 0,
-    image: "",
-    content: "",
-  },
 };
 
 //get postList - Home
@@ -35,8 +13,7 @@ export const __getPostList = createAsyncThunk(
   "getPostList",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get("http://localhost:3001/posts");
-      //나중에 서버 연결하면 posts/list로 변경할것
+      const response = await api.get("api/posts/list");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -48,9 +25,9 @@ export const __getPostList = createAsyncThunk(
 export const __addPost = createAsyncThunk(
   "addPost",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      const response = await axios.post("http://localhost:3001/posts", {
-        id: payload.id,
+      const response = await apis.post("api/posts/", {
         title: payload.title,
         level: payload.level,
         time: payload.time,
@@ -70,12 +47,8 @@ export const __addPost = createAsyncThunk(
 export const __getPostId = createAsyncThunk(
   "getPostId",
   async (payload, thunkAPI) => {
-    // console.log(payload);
     try {
-      const response = await axios.get(
-        `http://localhost:3001/posts/${payload}`
-      );
-      // `http://localhost:3001/posts/detail/${payload}`로 변경할것
+      const response = await api.get(`api/posts/detail/${payload.id}`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -89,21 +62,16 @@ export const __updatePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload, "payload");
     try {
-      const response = await axios.put(
-        `http://localhost:3001/posts/${payload.id}`,
-        // `http://localhost:3001/posts/update/${payload.id}`
-        {
-          id: payload.id,
-          title: payload.title,
-          level: payload.level,
-          time: payload.time,
-          minperson: payload.minperson,
-          maxperson: payload.maxperson,
-          image: payload.image,
-          content: payload.content,
-        }
-      );
-      // console.log(response);
+      const response = await apis.put(`api/posts/update/${payload.id}`, {
+        // id: payload.id,
+        title: payload.title,
+        level: payload.level,
+        time: payload.time,
+        minperson: payload.minperson,
+        maxperson: payload.maxperson,
+        image: payload.image,
+        content: payload.content,
+      });
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -116,8 +84,7 @@ export const __deletePost = createAsyncThunk(
   "deletePost",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/posts/${payload}`);
-      //`http://localhost:3001/posts/delete/${payload}`로 변경할것
+      await apis.delete(`/api/posts/delete/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

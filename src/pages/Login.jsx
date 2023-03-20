@@ -19,17 +19,18 @@ function Login() {
     password: "",
   });
 
-  const changeInputHandler = (event) => {
+  const changeInputHandler = event => {
     const { value, name } = event.target;
-    setUser((old) => {
+    setUser(old => {
       return { ...old, [name]: value };
     });
   };
 
-  const onSunmitHandler = async (e) => {
+  const onSunmitHandler = async e => {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
+
       const payload = jwt_decode(res.headers.authorization.substr(7));
 
       cookies.set("token", res.headers.authorization.substr(7), {
