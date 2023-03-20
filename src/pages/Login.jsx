@@ -9,6 +9,7 @@ import { api } from "../api/api";
 import apis from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
+      const payload = jwt_decode(res.headers.authorization.substr(7));
       cookies.set("token", res.headers.authorization.substr(7), {
+        path: "/",
+      });
+      cookies.set("nickname", payload.auth, {
         path: "/",
       });
       navigate("/");
