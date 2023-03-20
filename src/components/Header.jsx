@@ -16,7 +16,7 @@ function Header() {
       text: "OK 누를시 로그인 페이지로 이동합니다.",
       icon: "warning",
       buttons: true,
-    }).then(willLogin => {
+    }).then((willLogin) => {
       if (willLogin) {
         navigate("/login");
       } else {
@@ -31,7 +31,7 @@ function Header() {
       text: "OK 누를시 로그인 페이지로 이동합니다.",
       icon: "warning",
       buttons: true,
-    }).then(willLogin => {
+    }).then((willLogin) => {
       if (willLogin) {
         cookies.remove("token");
         cookies.remove("nickname");
