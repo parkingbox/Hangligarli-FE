@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
 import apis from "../api/api";
+import { cookies } from "../shared/cookie";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -165,6 +166,12 @@ function SignUp() {
       alert(error);
     }
   };
+  useEffect(() => {
+    const token = cookies.get("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <>
