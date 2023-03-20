@@ -5,8 +5,9 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
+import jwt_decode from "jwt-decode";
 
-import apis from "../api/api";
+import {api} from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -28,10 +29,16 @@ function Login() {
   const onSunmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await apis.post("/api/users/login", user);
+      const res = await api.post("/api/users/login", user);
+      const payload = jwt_decode(res.headers.authorization.substr(7));
+
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });
+      cookies.set("nickname", payload.auth, {
+        path: "/",
+      });
+
       navigate("/");
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
