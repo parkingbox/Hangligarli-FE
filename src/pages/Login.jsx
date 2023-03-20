@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
-
+import { api } from "../api/api";
 import apis from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
@@ -18,17 +18,17 @@ function Login() {
     password: "",
   });
 
-  const changeInputHandler = (event) => {
+  const changeInputHandler = event => {
     const { value, name } = event.target;
-    setUser((old) => {
+    setUser(old => {
       return { ...old, [name]: value };
     });
   };
 
-  const onSunmitHandler = async (e) => {
+  const onSunmitHandler = async e => {
     e.preventDefault();
     try {
-      const res = await apis.post("/api/users/login", user);
+      const res = await api.post("/api/users/login", user);
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });

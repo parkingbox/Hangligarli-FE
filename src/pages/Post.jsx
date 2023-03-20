@@ -4,12 +4,12 @@ import { __addPost } from "../redux/modules/PostSlice";
 import Button from "./../components/Button";
 import Input from "./../components/Input";
 import useInput from "../hooks/useInput";
-import nextId from "react-id-generator";
+// import nextId from "react-id-generator";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function Post() {
-  const id = nextId();
+  // const id = nextId();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ function Post() {
   const [content, onChangeContentHandler] = useInput("");
 
   const [post, setPost] = useState({
-    id: 0,
+    // id: 0,
     title: "",
     level: "",
     time: "",
@@ -62,12 +62,8 @@ function Post() {
 
   const onSubmitHandler = event => {
     event.preventDefault();
-
-    navigate("/");
-
-    dispatch(__addPost({ ...post, id }));
+    dispatch(__addPost({ ...post }));
     setPost({
-      id: 0,
       title: "",
       level: "",
       time,
@@ -76,6 +72,7 @@ function Post() {
       image: "",
       content: "",
     });
+    navigate("/");
   };
 
   return (
