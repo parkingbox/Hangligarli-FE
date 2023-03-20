@@ -1,7 +1,13 @@
+import GlobalStyle from "./Globalstyle";
 import Router from "./shared/Router";
 
 function App() {
-  return <Router />;
+  return (
+    <>
+      <GlobalStyle></GlobalStyle>
+      <Router />
+    </>
+  );
 }
 
 export default App;

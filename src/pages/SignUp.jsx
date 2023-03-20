@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
-import apis from "../api/api";
+import apis, { api } from "../api/api";
 import { cookies } from "../shared/cookie";
 
 function SignUp() {
@@ -140,32 +140,40 @@ function SignUp() {
 
   const idDuplicationCheck = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await apis.get("/api/users/check/username");
-      if (response.statusCode === 400) {
-        alert("중복된 아이디입니다.");
-      } else alert("사용가능한 아이디입니다.");
+      await api.post("/api/users/check/username", {
+        username: username,
+      });
+      if (username === "") {
+        alert("아이디를 입력해주세요");
+      } else if (!idCheck(username)) {
+        alert("아이디를 확인해주세요");
+      } else {
+        alert("사용가능한 아이디입니다.");
+      }
     } catch (error) {
-      alert(error);
+      alert("중복된 아이디입니다.");
     }
   };
+
   const nameDuplicationCheck = async (e) => {
     e.preventDefault();
     try {
-      const response = await apis.get("/api/users/check/nickname", {
-        username,
+      await api.post("/api/users/check/nickname", {
+        nickname: nickname,
       });
-      if (username === "") {
-        alert("아이디를 입력하세요");
+      if (nickname === "") {
+        alert("닉네임를 입력해주세요");
+      } else if (!nameCheck(nickname)) {
+        alert("닉네임을 확인해주세요.");
+      } else {
+        alert("사용가능한 닉네임입니다.");
       }
-      if (response.statusCode === 400) {
-        alert("중복된 아이디입니다.");
-      } else alert("사용가능한 아이디입니다.");
     } catch (error) {
-      alert(error);
+      alert("중복된 닉네임입니다.");
     }
   };
+
   useEffect(() => {
     const token = cookies.get("token");
     if (token) {
@@ -174,8 +182,13 @@ function SignUp() {
   }, []);
 
   return (
-    <>
-      <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
+    <BackWrap>
+      <Wrapper
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <h1>회원가입</h1>
         <FormWrap onSubmit={onSubmitHandler}>
           <InputWrap>
@@ -316,7 +329,7 @@ function SignUp() {
           </Wrapper>
         </FormWrap>
       </Wrapper>
-    </>
+    </BackWrap>
   );
 }
 
@@ -354,9 +367,16 @@ const WrongComment = styled.p`
   top: 95px;
   margin: 0;
   font-size: 13px;
-  color: #ea5455;
+  color: #db3333;
 `;
 
 const InputWrap = styled.div`
   height: 90px;
+`;
+
+const BackWrap = styled.div`
+  background-image: url("");
+  background-size: cover;
+  opacity: 0.8;
+  height: 100vh;
 `;
