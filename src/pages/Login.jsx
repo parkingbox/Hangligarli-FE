@@ -10,6 +10,7 @@ import jwt_decode from "jwt-decode";
 import {api} from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate();
@@ -39,7 +40,6 @@ function Login() {
       cookies.set("nickname", payload.auth, {
         path: "/",
       });
-
       navigate("/");
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
