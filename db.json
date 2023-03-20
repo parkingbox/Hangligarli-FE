@@ -1,0 +1,43 @@
+{
+  "posts": [
+    {
+      "id": "id130",
+      "title": "2345245",
+      "level": "",
+      "time": null,
+      "minperson": "",
+      "maxperson": "",
+      "content": "2452345"
+    },
+    {
+      "id": "id122",
+      "title": "항리갈리",
+      "level": "",
+      "time": 62,
+      "minperson": "4",
+      "maxperson": "5",
+      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
+      "content": "ㅎ히힣히"
+    },
+    {
+      "id": "id200",
+      "title": "항해리갈리",
+      "level": "veryhard",
+      "time": null,
+      "minperson": "1",
+      "maxperson": "5",
+      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
+      "content": "종을 엄청엄청 빨리 쳐보아요"
+    },
+    {
+      "id": "id190",
+      "title": "할리와 갈갈이",
+      "level": "Normal",
+      "time": 61,
+      "minperson": "1",
+      "maxperson": "1",
+      "image": "http://redbutton.co.kr/wp-content/uploads/2021/04/1%EC%95%84%EB%B0%9c.png",
+      "content": "종을 쳐요"
+    }
+  ]
+}
