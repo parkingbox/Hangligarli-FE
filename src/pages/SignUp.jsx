@@ -68,6 +68,7 @@ function SignUp() {
 
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
+        navigate("/login");
       }
     } catch (e) {
       swal(e);
@@ -136,6 +137,35 @@ function SignUp() {
     }
   };
 
+  const idDuplicationCheck = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await apis.get("/api/users/check/username");
+      if (response.statusCode === 400) {
+        alert("중복된 아이디입니다.");
+      } else alert("사용가능한 아이디입니다.");
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const nameDuplicationCheck = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await apis.get("/api/users/check/nickname", {
+        username,
+      });
+      if (username === "") {
+        alert("아이디를 입력하세요");
+      }
+      if (response.statusCode === 400) {
+        alert("중복된 아이디입니다.");
+      } else alert("사용가능한 아이디입니다.");
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <>
       <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
@@ -151,9 +181,19 @@ function SignUp() {
               name="username"
               required
               value={username}
-              style={{ margin: "5px 0 5px 0" }}
+              style={{ margin: "5px 0 5px 0", position: "relative" }}
               onChange={onChangeUsername}
             />
+            <Button
+              style={{
+                margin: "5px",
+                width: "50px",
+                height: "40px",
+              }}
+              onClick={idDuplicationCheck}
+            >
+              확인
+            </Button>
             <div>
               {username.length > 0 && isUsername ? (
                 <CorrectComment>{usernameMessage}</CorrectComment>
@@ -175,6 +215,16 @@ function SignUp() {
               style={{ margin: "5px 0 5px 0" }}
               onChange={onChangeNickname}
             />
+            <Button
+              style={{
+                margin: "5px",
+                width: "50px",
+                height: "40px",
+              }}
+              onClick={nameDuplicationCheck}
+            >
+              확인
+            </Button>
             <div>
               {0 < nickname.length < 10 && isNickname ? (
                 <CorrectComment>{nicknameMessage}</CorrectComment>
