@@ -8,7 +8,7 @@ const token = cookies.get("token");
 export const apis = axios.create({
   baseURL: process.env.REACT_APP_API,
   headers: {
-    authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
   },
 });
 

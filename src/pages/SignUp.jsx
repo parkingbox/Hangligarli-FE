@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
-import apis from "../api/api";
+import apis, { api } from "../api/api";
+import { cookies } from "../shared/cookie";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ function SignUp() {
 
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
+        navigate("/login");
       }
     } catch (e) {
       swal(e);
@@ -136,9 +138,57 @@ function SignUp() {
     }
   };
 
+  const idDuplicationCheck = async (e) => {
+    e.preventDefault();
+    try {
+      await api.post("/api/users/check/username", {
+        username: username,
+      });
+      if (username === "") {
+        alert("아이디를 입력해주세요");
+      } else if (!idCheck(username)) {
+        alert("아이디를 확인해주세요");
+      } else {
+        alert("사용가능한 아이디입니다.");
+      }
+    } catch (error) {
+      alert("중복된 아이디입니다.");
+    }
+  };
+
+  const nameDuplicationCheck = async (e) => {
+    e.preventDefault();
+    try {
+      await api.post("/api/users/check/nickname", {
+        nickname: nickname,
+      });
+      if (nickname === "") {
+        alert("닉네임를 입력해주세요");
+      } else if (!nameCheck(nickname)) {
+        alert("닉네임을 확인해주세요.");
+      } else {
+        alert("사용가능한 닉네임입니다.");
+      }
+    } catch (error) {
+      alert("중복된 닉네임입니다.");
+    }
+  };
+
+  useEffect(() => {
+    const token = cookies.get("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+
   return (
-    <>
-      <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
+    <BackWrap>
+      <Wrapper
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <h1>회원가입</h1>
         <FormWrap onSubmit={onSubmitHandler}>
           <InputWrap>
@@ -151,9 +201,19 @@ function SignUp() {
               name="username"
               required
               value={username}
-              style={{ margin: "5px 0 5px 0" }}
+              style={{ margin: "5px 0 5px 0", position: "relative" }}
               onChange={onChangeUsername}
             />
+            <Button
+              style={{
+                margin: "5px",
+                width: "50px",
+                height: "40px",
+              }}
+              onClick={idDuplicationCheck}
+            >
+              확인
+            </Button>
             <div>
               {username.length > 0 && isUsername ? (
                 <CorrectComment>{usernameMessage}</CorrectComment>
@@ -175,6 +235,16 @@ function SignUp() {
               style={{ margin: "5px 0 5px 0" }}
               onChange={onChangeNickname}
             />
+            <Button
+              style={{
+                margin: "5px",
+                width: "50px",
+                height: "40px",
+              }}
+              onClick={nameDuplicationCheck}
+            >
+              확인
+            </Button>
             <div>
               {0 < nickname.length < 10 && isNickname ? (
                 <CorrectComment>{nicknameMessage}</CorrectComment>
@@ -259,7 +329,7 @@ function SignUp() {
           </Wrapper>
         </FormWrap>
       </Wrapper>
-    </>
+    </BackWrap>
   );
 }
 
@@ -297,9 +367,16 @@ const WrongComment = styled.p`
   top: 95px;
   margin: 0;
   font-size: 13px;
-  color: #ea5455;
+  color: #db3333;
 `;
 
 const InputWrap = styled.div`
   height: 90px;
+`;
+
+const BackWrap = styled.div`
+  background-image: url("");
+  background-size: cover;
+  opacity: 0.8;
+  height: 100vh;
 `;

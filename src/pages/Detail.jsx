@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import styled from "styled-components";
+
 import { __getPostId, __deletePost } from "../redux/modules/PostSlice";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function Detail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, error, post } = useSelector(state => {
+  const { isLoading, error, post } = useSelector((state) => {
     return state.posts;
   });
 
@@ -32,6 +33,12 @@ function Detail() {
   if (error) {
     return <div>{error.message}</div>;
   }
+
+  const onClickDeleteHandler = (id) => {
+    //홈으로 이동시키는 코드 추가
+
+    dispatch(__deletePost(id));
+  };
 
   return (
     <div>

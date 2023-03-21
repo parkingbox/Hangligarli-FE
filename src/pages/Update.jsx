@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function Update() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { post } = useSelector(state => {
+  const { post } = useSelector((state) => {
     return state.posts;
   });
   // console.log(post, "Update.jsx, state.posts");
@@ -18,17 +18,17 @@ function Update() {
   //time
   const [hour, setHour] = useState();
   const [minute, setMinute] = useState();
-  const onChangeHourHandler = e => {
+  const onChangeHourHandler = (e) => {
     setHour(e.target.value);
   };
-  const onChangeMinuteHandler = e => {
+  const onChangeMinuteHandler = (e) => {
     setMinute(e.target.value);
   };
   const time = hour * Number(60) + Number(minute);
 
   //image
   const [image, setImage] = useState();
-  const onChangeImageHandler = e => {
+  const onChangeImageHandler = (e) => {
     e.preventDefault();
     setImage(e.target.value);
   };
@@ -65,37 +65,37 @@ function Update() {
       content,
     });
     if (title) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, title };
       });
     }
     if (level) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, level };
       });
     }
     if (time) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, time };
       });
     }
     if (image) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, image };
       });
     }
     if (minperson) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, minperson };
       });
     }
     if (maxperson) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, maxperson };
       });
     }
     if (content) {
-      setUpdatePost(prev => {
+      setUpdatePost((prev) => {
         return { ...prev, content };
       });
     }
@@ -116,6 +116,7 @@ function Update() {
       content,
     });
   }, [post]);
+
 
   const onSubmitHandler = event => {
     // event.preventDefault();

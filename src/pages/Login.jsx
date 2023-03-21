@@ -5,11 +5,11 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
+import jwt_decode from "jwt-decode";
+
 import { api } from "../api/api";
-import apis from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,18 +19,28 @@ function Login() {
     password: "",
   });
 
-  const changeInputHandler = event => {
+  const fetchTodos = async () => {
+    const { data } = await api.get("api/posts/list");
+    setUser(data);
+  };
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const changeInputHandler = (event) => {
     const { value, name } = event.target;
-    setUser(old => {
+    setUser((old) => {
       return { ...old, [name]: value };
     });
   };
 
-  const onSunmitHandler = async e => {
+  const onSunmitHandler = async (e) => {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
+
       const payload = jwt_decode(res.headers.authorization.substr(7));
+
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });
@@ -60,7 +70,7 @@ function Login() {
   }, []);
 
   return (
-    <>
+    <LoginWrap>
       <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
         <h1>로그인</h1>
         <FormWrap onSubmit={onSunmitHandler}>
@@ -92,12 +102,16 @@ function Login() {
           <SignLink to="/signup">회원가입</SignLink>
         </SignupWrap>
       </Wrapper>
-    </>
+    </LoginWrap>
   );
 }
 
 export default Login;
-
+const LoginWrap = styled.div`
+  background-image: url("https://camo.githubusercontent.com/67abf5af2cf79447cdd4cebe759d9e6dc3d6a9fa653a7a1297b178067adae95f/687474703a2f2f6f70656e696d6167652e696e7465727061726b2e636f6d2f676f6f64735f696d6167655f6269672f312f362f362f302f383131333938313636305f6c2e6a7067");
+  background-size: cover;
+  height: 100vh;
+`;
 const FormWrap = styled.form`
   width: fit-content;
   height: fit-content;
@@ -109,6 +123,7 @@ const FormWrap = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
   align-items: stretch;
 `;
 

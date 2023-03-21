@@ -14,17 +14,17 @@ function Post() {
   //time
   const [hour, setHour] = useState();
   const [minute, setMinute] = useState();
-  const onChangeHourHandler = e => {
+  const onChangeHourHandler = (e) => {
     setHour(e.target.value);
   };
-  const onChangeMinuteHandler = e => {
+  const onChangeMinuteHandler = (e) => {
     setMinute(e.target.value);
   };
   const time = hour * Number(60) + Number(minute);
 
   //image
   const [image, setImage] = useState();
-  const onChangeImageHandler = e => {
+  const onChangeImageHandler = (e) => {
     e.preventDefault();
     setImage(e.target.value);
   };
@@ -58,7 +58,7 @@ function Post() {
     });
   }, [title, level, time, image, minperson, maxperson, content]);
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
     dispatch(__addPost({ ...post }));
     setPost({
