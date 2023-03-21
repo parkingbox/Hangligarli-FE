@@ -1,11 +1,23 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import apis, { api } from "../../api/api";
+// import { axios } from "axios";
 
 const initialState = {
   posts: [],
   isLoading: false,
   isError: false,
   error: null,
+  //detail.jsx 상세페이지를 위한 redux state값(서버 데이터와 무관함)
+  post: {
+    id: 0,
+    title: "",
+    level: "",
+    time: "",
+    minperson: 0,
+    maxperson: 0,
+    image: "",
+    content: "",
+  },
 };
 
 //get postList - Home
@@ -25,7 +37,7 @@ export const __getPostList = createAsyncThunk(
 export const __addPost = createAsyncThunk(
   "addPost",
   async (payload, thunkAPI) => {
-    console.log(payload);
+    console.log(payload, ": payload");
     try {
       const response = await apis.post("api/posts/", {
         title: payload.title,
@@ -36,7 +48,12 @@ export const __addPost = createAsyncThunk(
         image: payload.image,
         content: payload.content,
       });
-      return thunkAPI.fulfillWithValue(response.data);
+      //response.data로 저장된 data를 받아와야하는데 못 함
+      // 따라서 fulfillWithValue 전에 get 요청하여 덮어주기
+      const getData = await api.get("api/posts/list");
+      // console.log(getData.data, "getData");
+      // return thunkAPI.fulfillWithValue(response.data);
+      return thunkAPI.fulfillWithValue(getData.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -47,9 +64,10 @@ export const __addPost = createAsyncThunk(
 export const __getPostId = createAsyncThunk(
   "getPostId",
   async (payload, thunkAPI) => {
+    // console.log(payload);
     try {
-      const response = await api.get(`api/posts/detail/${payload.id}`);
-      return thunkAPI.fulfillWithValue(response.data);
+      const response = await api.get(`api/posts/detail/${payload}`);
+      return thunkAPI.fulfillWithValue(response.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -60,10 +78,9 @@ export const __getPostId = createAsyncThunk(
 export const __updatePost = createAsyncThunk(
   "updatePost",
   async (payload, thunkAPI) => {
-    console.log(payload, "payload");
     try {
       const response = await apis.put(`api/posts/update/${payload.id}`, {
-        // id: payload.id,
+        id: payload.id,
         title: payload.title,
         level: payload.level,
         time: payload.time,
@@ -83,6 +100,7 @@ export const __updatePost = createAsyncThunk(
 export const __deletePost = createAsyncThunk(
   "deletePost",
   async (payload, thunkAPI) => {
+    // console.log(payload, ": payload");
     try {
       await apis.delete(`/api/posts/delete/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
@@ -120,7 +138,8 @@ export const PostSlice = createSlice({
     [__addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.posts = [...state.posts, action.payload];
+      state.posts = action.payload;
+      // state.posts = [...state.posts, ...action.payload];
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -165,9 +184,13 @@ export const PostSlice = createSlice({
       state.isError = false;
     },
     [__deletePost.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      console.log(current(state));
+      console.log(current(state.posts));
       state.isLoading = false;
       state.isError = false;
-      state.posts = state.posts.filter(post => post.id !== action.payload);
+      state.posts = state.posts.filter(list => list.id !== action.payload);
+      // state.posts = action.payload;
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;

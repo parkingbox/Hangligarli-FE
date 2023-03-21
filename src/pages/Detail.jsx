@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { __getPostId, __deletePost } from "../redux/modules/PostSlice";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 function Detail() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, error, post } = useSelector(state => {
     return state.posts;
@@ -17,6 +19,12 @@ function Detail() {
     dispatch(__getPostId(id));
   }, [dispatch, id]);
 
+  const onClickDeleteHandler = id => {
+    dispatch(__deletePost(id));
+    alert("삭제되었습니다!");
+    navigate("/");
+  };
+
   if (isLoading) {
     return <div>로딩중</div>;
   }
@@ -25,16 +33,10 @@ function Detail() {
     return <div>{error.message}</div>;
   }
 
-  const onClickDeleteHandler = id => {
-    //홈으로 이동시키는 코드 추가
-
-    dispatch(__deletePost(id));
-  };
-
   return (
     <div>
       <Link to={"/"}>홈</Link>
-      <div>{post.id}: 확인용.없앨예정</div>
+      <div>{id}: 확인용.없앨예정</div>
       <div>
         <div>
           <img
@@ -55,11 +57,7 @@ function Detail() {
               <Link to={"/update"} key={post.id}>
                 <Button>수정하기</Button>
               </Link>
-              <Link to={"/"}>
-                <Button onClick={() => onClickDeleteHandler(post.id)}>
-                  삭제하기
-                </Button>
-              </Link>
+              <Button onClick={() => onClickDeleteHandler(id)}>삭제하기</Button>
             </div>
           </div>
           <div>게임 진행 방법: {post.content}</div>

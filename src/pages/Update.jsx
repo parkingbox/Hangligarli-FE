@@ -13,7 +13,7 @@ function Update() {
   const { post } = useSelector(state => {
     return state.posts;
   });
-  console.log(post, "Update.jsx, state.posts");
+  // console.log(post, "Update.jsx, state.posts");
 
   //time
   const [hour, setHour] = useState();
@@ -50,20 +50,20 @@ function Update() {
     image: "",
     content: "",
   });
-  console.log(updatePost);
+  // console.log(updatePost);
 
   //3. 2번에 의해 덮어씌워진 1번 updatePost값이 onChange로 변경되면 의존성배열로 감지 -> dispatch에 사용
   useEffect(() => {
-    // setUpdatePost({
-    //   id: post.id,
-    //   title,
-    //   level,
-    //   time,
-    //   minperson,
-    //   maxperson,
-    //   image,
-    //   content,
-    // });
+    setUpdatePost({
+      id: post.id,
+      title,
+      level,
+      time,
+      minperson,
+      maxperson,
+      image,
+      content,
+    });
     if (title) {
       setUpdatePost(prev => {
         return { ...prev, title };
@@ -118,11 +118,9 @@ function Update() {
   }, [post]);
 
   const onSubmitHandler = event => {
-    event.preventDefault();
-    //payload값 전달
+    // event.preventDefault();
     dispatch(__updatePost({ ...updatePost }));
-
-    //home이 아니라 수정하려는 {id}의 detail page
+    alert("수정되었습니다!");
     navigate(`/detail/${post.id}`);
 
     //input값 초기화
