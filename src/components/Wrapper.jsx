@@ -7,8 +7,6 @@ function Wrapper({ children, ...rest }) {
 
 const StWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  
   height: 90vh;
 `;
 

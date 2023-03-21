@@ -12,8 +12,9 @@ function Post() {
   const dispatch = useDispatch();
 
   //time
-  const [hour, setHour] = useState();
-  const [minute, setMinute] = useState();
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
+
   const onChangeHourHandler = (e) => {
     setHour(e.target.value);
   };
@@ -70,6 +71,7 @@ function Post() {
       image: "",
       content: "",
     });
+    alert("작성되었습니다!");
     navigate("/");
   };
 

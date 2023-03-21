@@ -6,7 +6,7 @@ const Input = ({ type, placeholder, value, onChange, name, style }) => {
       type={type}
       name={name}
       placeholder={placeholder}
-      value={value}
+      value={value || ""}
       onChange={onChange}
       style={style}
     />
@@ -22,7 +22,7 @@ const StyledInput = styled.input`
   padding-left: 12px;
   padding-right: 12px;
   &:focus-within {
-    box-shadow: 0 0 0 1px #000;
+    border: none;
   }
 `;
 

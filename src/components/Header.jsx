@@ -8,7 +8,7 @@ import Button from "./Button";
 
 function Header() {
   const navigate = useNavigate();
-
+  
   const onLoginBtn = () => {
     cookies.remove("token");
     swal({
@@ -35,7 +35,7 @@ function Header() {
       if (willLogin) {
         cookies.remove("token");
         cookies.remove("nickname");
-        navigate("/login");
+        
       } else {
         swal("비회원은 글작성이 제한됩니다.");
       }

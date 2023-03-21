@@ -16,8 +16,8 @@ function Update() {
   // console.log(post, "Update.jsx, state.posts");
 
   //time
-  const [hour, setHour] = useState();
-  const [minute, setMinute] = useState();
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
   const onChangeHourHandler = (e) => {
     setHour(e.target.value);
   };
@@ -117,8 +117,7 @@ function Update() {
     });
   }, [post]);
 
-
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     // event.preventDefault();
     dispatch(__updatePost({ ...updatePost }));
     alert("수정되었습니다!");
