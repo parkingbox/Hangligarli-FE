@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
 import { __getPostId, __deletePost } from "../redux/modules/PostSlice";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function Detail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, error, post } = useSelector(state => {
+  const { isLoading, error, post } = useSelector((state) => {
     return state.posts;
   });
 
@@ -19,7 +20,7 @@ function Detail() {
     dispatch(__getPostId(id));
   }, [dispatch, id]);
 
-  const onClickDeleteHandler = id => {
+  const onClickDeleteHandler = (id) => {
     dispatch(__deletePost(id));
     alert("삭제되었습니다!");
     navigate("/");

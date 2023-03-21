@@ -5,11 +5,11 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
+import jwt_decode from "jwt-decode";
+
 import { api } from "../api/api";
-import apis from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,18 +19,28 @@ function Login() {
     password: "",
   });
 
-  const changeInputHandler = event => {
+  const fetchTodos = async () => {
+    const { data } = await api.get("api/posts/list");
+    setUser(data);
+  };
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const changeInputHandler = (event) => {
     const { value, name } = event.target;
-    setUser(old => {
+    setUser((old) => {
       return { ...old, [name]: value };
     });
   };
 
-  const onSunmitHandler = async e => {
+  const onSunmitHandler = async (e) => {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
+
       const payload = jwt_decode(res.headers.authorization.substr(7));
+
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });
@@ -60,72 +70,204 @@ function Login() {
   }, []);
 
   return (
-    <>
+    <LoginWrap>
+      <h1
+        style={{
+          display: "flex",
+          textAlign: "center",
+          justifyContent: "center",
+          marginTop: "50px",
+        }}
+      >
+        Welcome to <br /> Hangligarli
+      </h1>
       <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
-        <h1>로그인</h1>
-        <FormWrap onSubmit={onSunmitHandler}>
-          <label>로그인 ID</label>
-          <Input
-            placeholder="ID를 입력하세요."
-            required
-            value={user.username}
-            name="username"
-            style={{ margin: "5px 0 5px 0" }}
-            onChange={changeInputHandler}
-          />
+        <FormWrap
+          onSubmit={onSunmitHandler}
+          style={{ justifyContent: "space-around", alignItems: "center" }}
+        >
+          <h1>Sign In</h1>
+          <FormInputWrapper>
+            <Input
+              placeholder="ID를 입력하세요."
+              required
+              value={user.username || ""}
+              name="username"
+              style={{
+                width: "250px",
+                height: "50px",
+                margin: "5px 0 5px 0",
+                border: "none",
+                backgroundColor: "#EEEEEE",
+              }}
+              onChange={changeInputHandler}
+            />
 
-          <label>비밀번호</label>
-          <Input
-            placeholder="비밀번호를 입력하세요."
-            type="password"
-            name="password"
-            value={user.password}
-            style={{ margin: "5px 0 0 0" }}
-            onChange={changeInputHandler}
-          />
+            <Input
+              placeholder="비밀번호를 입력하세요."
+              type="password"
+              name="password"
+              value={user.password || ""}
+              style={{
+                width: "250px",
+                height: "50px",
+                margin: "5px 0 0 0",
+                border: "none",
+                backgroundColor: "#EEEEEE",
+              }}
+              onChange={changeInputHandler}
+            />
+          </FormInputWrapper>
           <ButtonWrap>
-            <Button style={{ height: "50px" }}>로그인</Button>
+            <Button
+              style={{
+                height: "40px",
+                borderRadius: "20px",
+                border: "none",
+                width: "95px",
+                backgroundColor: "#EEEEEE",
+                color: "gray",
+              }}
+              onClick={() => navigate("/")}
+            >
+              Home
+            </Button>
+            <Button
+              style={{
+                height: "40px",
+                borderRadius: "20px",
+                width: "95px",
+                border: "none",
+                color: "#fff",
+                backgroundColor: "#E6A15B",
+              }}
+            >
+              Sign In
+            </Button>
           </ButtonWrap>
         </FormWrap>
         <SignupWrap>
-          <p>저희가 처음이신가요?</p>
-          <SignLink to="/signup">회원가입</SignLink>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "center",
+            }}
+          >
+            <h1>Hello!</h1>
+            <p>
+              Enter your personal
+              <br /> details and start journey
+              <br />
+              with us
+            </p>
+          </div>
+          <div>
+            <Button
+              style={{
+                marginTop: "20px",
+                backgroundColor: "#222a3e",
+                border: "none",
+                color: "#fff",
+                borderRadius: "20px",
+                height: "40px",
+              }}
+              onClick={() => {
+                swal({
+                  title: "아직 회원이 아니신가요?",
+                  text: "OK 누를시 회원가입 페이지로 이동합니다.",
+                  buttons: true,
+                }).then((willSign) => {
+                  if (willSign) {
+                    navigate("/signup");
+                  } else {
+                    swal("비회원은 기능이 제한됩니다.");
+                  }
+                });
+              }}
+            >
+              Sign Up
+            </Button>
+          </div>
         </SignupWrap>
       </Wrapper>
-    </>
+    </LoginWrap>
   );
 }
 
 export default Login;
-
-const FormWrap = styled.form`
-  width: fit-content;
-  height: fit-content;
-  border: 2px solid #ffffff;
-  border-radius: 18px;
-  box-shadow: 1px 1px 7px 0px black;
-  margin: 30px;
-  padding: 30px 90px 40px 90px;
+const LoginWrap = styled.div`
+  background-color: #f6f5f7;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
+  height: 100vh;
+`;
+const FormWrap = styled.form`
+  height: 50vh;
+  border: 2px solid #fff;
+  border-radius: 18px 0 0 18px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  background-color: #fff;
+  color: #979a9f;
+
+  display: flex;
+  width: 20vw;
+  min-width: 250px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ButtonWrap = styled.div`
-  padding-top: 20px;
   display: flex;
   justify-content: center;
+  gap: 10px;
 `;
 
 const SignupWrap = styled.div`
   display: flex;
-  grid-column-gap: 16px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 50vh;
+  width: 20vw;
+  min-width: 250px;
+  background: -moz-linear-gradient(
+    48deg,
+    rgba(42, 46, 54, 1) 0%,
+    rgba(97, 107, 125, 1) 100%
+  );
+  background: -webkit-gradient(
+    linear,
+    left bottom,
+    right top,
+    color-stop(0%, rgba(42, 46, 54, 1)),
+    color-stop(100%, rgba(97, 107, 125, 1))
+  );
+  background: -webkit-linear-gradient(
+    48deg,
+    rgba(42, 46, 54, 1) 0%,
+    rgba(97, 107, 125, 1) 100%
+  );
+  background: linear-gradient(
+    42deg,
+    rgba(42, 46, 54, 1) 0%,
+    rgba(97, 107, 125, 1) 100%
+  );
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  margin-bottom: 100px;
+  border-radius: 0 18px 18px 0;
+  h1 {
+    color: #fff;
+  }
+  & p {
+    color: #fff;
+  }
 `;
 
-const SignLink = styled(Link)`
-  color: black;
-  text-decoration-line: underline;
+const FormInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;

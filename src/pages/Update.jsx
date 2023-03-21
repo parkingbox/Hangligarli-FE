@@ -9,7 +9,7 @@ import styled from "styled-components";
 function Update() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { post } = useSelector(state => {
+  const { post } = useSelector((state) => {
     return state.posts;
   });
 
@@ -27,10 +27,10 @@ function Update() {
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
 
-  const onChangeHourHandler = e => {
+  const onChangeHourHandler = (e) => {
     setHour(e.target.value);
   };
-  const onChangeMinuteHandler = e => {
+  const onChangeMinuteHandler = (e) => {
     setMinute(e.target.value);
   };
 
