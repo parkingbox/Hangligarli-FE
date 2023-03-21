@@ -19,7 +19,6 @@ const initialState = {
     content: "",
   },
 };
-
 //get postList - Home
 export const __getPostList = createAsyncThunk(
   "getPostList",
@@ -48,6 +47,10 @@ export const __addPost = createAsyncThunk(
         image: payload.image,
         content: payload.content,
       });
+      if (response.status === 200) {
+        alert("작성되었습니다!");
+        window.location = "/";
+      }
       //response.data로 저장된 data를 받아와야하는데 못 함
       // 따라서 fulfillWithValue 전에 get 요청하여 덮어주기
       const getData = await api.get("api/posts/list");
@@ -55,7 +58,8 @@ export const __addPost = createAsyncThunk(
       // return thunkAPI.fulfillWithValue(response.data);
       return thunkAPI.fulfillWithValue(getData.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error, "thunk");
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -80,7 +84,7 @@ export const __updatePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await apis.put(`api/posts/update/${payload.id}`, {
-        id: payload.id,
+        // id: payload.id,
         title: payload.title,
         level: payload.level,
         time: payload.time,
@@ -142,6 +146,7 @@ export const PostSlice = createSlice({
       // state.posts = [...state.posts, ...action.payload];
     },
     [__addPost.rejected]: (state, action) => {
+      console.log(action.payload, "payload");
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;
