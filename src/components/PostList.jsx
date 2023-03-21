@@ -23,11 +23,12 @@ function PostList() {
     return <div>{error.message}</div>;
   }
 
-  // console.log(posts.data);
-
   return (
     <StPostListComponents>
-      <h2>BOARDGAME LISTS</h2>
+      <StPostListDiv>BOARDGAME LISTS</StPostListDiv>
+      <StPostListDescription>
+        '보러가기'를 통해 수많은 보드게이머가 작성한 게임 방법을 확인해보세요!
+      </StPostListDescription>
       <StPostListWrap>
         {posts.data?.map(post => {
           return (
@@ -39,10 +40,12 @@ function PostList() {
                   alt="게임 이미지"
                 />
               </div>
-              <div>
-                <div>{post.title}</div>
-                <Link to={`/detail/${post.id}`}>보러가기</Link>
-              </div>
+              <StPostListTitleDetail>
+                <StPostListTitle>{post.title}</StPostListTitle>
+                <StPostDetailLink to={`/detail/${post.id}`}>
+                  보러가기
+                </StPostDetailLink>
+              </StPostListTitleDetail>
             </StPostComponent>
           );
         })}
@@ -54,10 +57,33 @@ function PostList() {
 export default PostList;
 
 const StPostListComponents = styled.div`
+  @font-face {
+    font-family: "TheJamsil5Bold";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+      format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  font-family: "TheJamsil5Bold";
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const StPostListDescription = styled.div`
+  font-size: 15px;
+  color: gray;
+  padding-bottom: 50px;
+`;
+
+const StPostListDiv = styled.div`
+  font-weight: bolder;
+  font-size: 35px;
+  font-style: italic;
+  padding-bottom: 10px;
+  color: #262525;
 `;
 const StPostListWrap = styled.div`
   display: grid;
@@ -75,4 +101,27 @@ const StPostComponent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const StPostListTitleDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`;
+
+const StPostListTitle = styled.div`
+  font-size: 23px;
+  font-weight: bold;
+  color: #2c2b2b;
+`;
+
+const StPostDetailLink = styled(Link)`
+  font-size: 14px;
+  text-decoration: none;
+  color: #6e6d6d9e;
+  border: 1px solid #6e6d6d8c;
+  border-radius: 10px;
+  padding: 5px;
 `;
