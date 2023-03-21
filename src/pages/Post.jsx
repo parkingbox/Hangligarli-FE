@@ -4,12 +4,10 @@ import { __addPost } from "../redux/modules/PostSlice";
 import Button from "./../components/Button";
 import Input from "./../components/Input";
 import useInput from "../hooks/useInput";
-// import nextId from "react-id-generator";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function Post() {
-  // const id = nextId();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

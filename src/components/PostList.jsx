@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { __getPostList } from "../redux/modules/PostSlice";
 import styled from "styled-components";
+// import { api } from "../api/api";
 
 function PostList() {
   const dispatch = useDispatch();
   const { isLoading, error, posts } = useSelector(state => {
     return state.posts;
   });
-  //   console.log(posts);
-
+  // console.log(posts);
   useEffect(() => {
     dispatch(__getPostList());
   }, [dispatch]);
@@ -22,6 +22,8 @@ function PostList() {
   if (error) {
     return <div>{error.message}</div>;
   }
+
+  // console.log(posts.data);
 
   return (
     <StPostListComponents>
@@ -39,9 +41,7 @@ function PostList() {
               </div>
               <div>
                 <div>{post.title}</div>
-                <Link to={`/detail/${post.id}`} key={post.id}>
-                  보러가기
-                </Link>
+                <Link to={`/detail/${post.id}`}>보러가기</Link>
               </div>
             </StPostComponent>
           );
