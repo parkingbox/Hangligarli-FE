@@ -20,7 +20,7 @@ function Detail() {
     dispatch(__getPostId(id));
   }, [dispatch, id]);
 
-  const onClickDeleteHandler = id => {
+  const onClickDeleteHandler = (id) => {
     dispatch(__deletePost(id));
     alert("삭제되었습니다!");
     navigate("/");
@@ -33,12 +33,6 @@ function Detail() {
   if (error) {
     return <div>{error.message}</div>;
   }
-
-  const onClickDeleteHandler = (id) => {
-    //홈으로 이동시키는 코드 추가
-
-    dispatch(__deletePost(id));
-  };
 
   return (
     <div>
