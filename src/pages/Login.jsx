@@ -72,9 +72,9 @@ function Login() {
   return (
     <LoginWrap>
       <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
-        <h1>로그인</h1>
+        <h1 style={{ color: "#fff" }}>로그인</h1>
         <FormWrap onSubmit={onSunmitHandler}>
-          <label>로그인 ID</label>
+          <label style={{ color: "#fff" }}>로그인 ID</label>
           <Input
             placeholder="ID를 입력하세요."
             required
@@ -84,7 +84,7 @@ function Login() {
             onChange={changeInputHandler}
           />
 
-          <label>비밀번호</label>
+          <label style={{ color: "#fff" }}>비밀번호</label>
           <Input
             placeholder="비밀번호를 입력하세요."
             type="password"
@@ -98,8 +98,10 @@ function Login() {
           </ButtonWrap>
         </FormWrap>
         <SignupWrap>
-          <p>저희가 처음이신가요?</p>
-          <SignLink to="/signup">회원가입</SignLink>
+          <p style={{ color: "#fff" }}>저희가 처음이신가요?</p>
+          <SignLink to="/signup" style={{ color: "#fff" }}>
+            회원가입
+          </SignLink>
         </SignupWrap>
       </Wrapper>
     </LoginWrap>
@@ -113,18 +115,15 @@ const LoginWrap = styled.div`
   height: 100vh;
 `;
 const FormWrap = styled.form`
-  width: fit-content;
-  height: fit-content;
+  height: 40vh;
   border: 2px solid #ffffff;
   border-radius: 18px;
-  box-shadow: 1px 1px 7px 0px black;
+  box-shadow: 1px 1px 5px 0px black;
   margin: 30px;
   padding: 30px 90px 40px 90px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
-  align-items: stretch;
 `;
 
 const ButtonWrap = styled.div`

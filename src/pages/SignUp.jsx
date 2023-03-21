@@ -58,7 +58,6 @@ function SignUp() {
     if (password !== checkPassword) {
       swal("비밀번호가 일치하지 않습니다.");
     }
-
     try {
       let user = {
         username,
@@ -66,7 +65,6 @@ function SignUp() {
         password,
       };
       const res = await apis.post("/api/users/signup", user);
-
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
         navigate("/login");
