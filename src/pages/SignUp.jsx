@@ -186,7 +186,7 @@ function SignUp() {
 
   return (
     <BackWrap style={{ backgroundColor: "#f6f5f7" }}>
-      <h1>회원가입</h1>
+      <h1 style={{ fontSize: "50px", fontFamily: "Single Day" }}>회원가입</h1>
       <Wrapper
         style={{
           display: "flex",
@@ -195,15 +195,15 @@ function SignUp() {
         }}
       >
         <SignInWrapper>
-          <h1>Welcome Back!</h1>
           <p style={{ textAlign: "center" }}>
-            Welcome To keep connected with us please
-            <br />
-            login with your personal info
+            저희 사이트에 방문해주셔서 감사합니다.
           </p>
+          <p>개인정보를 입력하고 저희와 함께해요!</p>
         </SignInWrapper>
         <FormWrap onSubmit={onSubmitHandler}>
-          <h1 style={{ marginBottom: "30px" }}>회원가입</h1>
+          <h1 style={{ marginBottom: "30px", fontFamily: "Gamja Flower" }}>
+            회원가입
+          </h1>
           <InputsWrapper>
             <InputWrap>
               <Input
@@ -400,13 +400,26 @@ function SignUp() {
 
 export default SignUp;
 
+const BackWrap = styled.div`
+  min-height: 760px;
+  opacity: 0.8;
+  height: 100vh;
+  padding-top: 50px;
+  overflow: hidden;
+  h1 {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+`;
+
 const FormWrap = styled.form`
   position: relative;
   margin-bottom: 20px;
   width: 400px;
   height: 60vh;
   min-width: 250px;
-  min-height: 380px;
+  min-height: 460px;
   border-radius: 0px 18px 18px 0px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   padding: 20px 40px 0 10px;
@@ -441,29 +454,18 @@ const InputWrap = styled.div`
   height: 70px;
 `;
 
-const BackWrap = styled.div`
-  background-image: url("");
-  background-size: cover;
-  opacity: 0.8;
-  height: 100vh;
-  padding-top: 50px;
-  overflow: hidden;
-  h1 {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-  }
-`;
 const SignInWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #222a3e;
+  font-size: 25px;
+  font-family: "Single Day";
   width: 400px;
   height: 60vh;
   min-width: 250px;
-  min-height: 380px;
+  min-height: 460px;
   margin-bottom: 20px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   border-radius: 18px 0px 0px 18px;

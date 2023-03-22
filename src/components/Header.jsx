@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import swal from "sweetalert";
-import apis from "../api/api";
+import apis, { api } from "../api/api";
 
 import { cookies } from "../shared/cookie";
 import Button from "./Button";
@@ -12,7 +12,7 @@ function Header({ nickname }) {
   const navigate = useNavigate();
 
   const memberSecede = cookies.get("nickname");
-
+  console.log(memberSecede);
   const onLoginBtn = () => {
     cookies.remove("token");
     swal({
@@ -58,7 +58,9 @@ function Header({ nickname }) {
   };
   const onSecedeBtn = async () => {
     try {
-      await apis.delete("/api/users/check/nickname", memberSecede);
+      await api.delete("/api/users/unregister/", {
+        memberSecede: memberSecede,
+      });
       swal({
         title: "확인을 누르면 계정이 탈퇴됩니다.",
         buttons: true,
@@ -68,8 +70,7 @@ function Header({ nickname }) {
           navigate("/login");
         }
       });
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   return (
     <Navbar>
@@ -87,8 +88,11 @@ function Header({ nickname }) {
       <LoginNavbar>
         {cookies.get("token") ? (
           <div>
-            <span style={{ color: "#fff" }}>
-              {cookies.get("nickname")}님 안녕하세요
+            <span style={{ color: "#fff", fontFamily: "Gamja Flower" }}>
+              <span style={{ fontSize: "25px", fontWeight: "bold" }}>
+                {cookies.get("nickname")}
+              </span>
+              님 안녕하세요
             </span>
           </div>
         ) : null}
@@ -133,7 +137,18 @@ function Header({ nickname }) {
             </Button>
           </AfterLogin>
         ) : (
-          <Button onClick={onLoginBtn}>로그인</Button>
+          <Button
+            style={{
+              height: "40px",
+              width: "60px",
+              backgroundColor: "#605549",
+              border: "none",
+              color: "#fff",
+            }}
+            onClick={onLoginBtn}
+          >
+            로그인
+          </Button>
         )}
       </LoginNavbar>
     </Navbar>
@@ -145,6 +160,7 @@ export default Header;
 const Navbar = styled.div`
   display: flex;
   justify-content: space-around;
+  font-family: Gamja Flower;
   height: 100px;
   background-color: #272522;
 `;
