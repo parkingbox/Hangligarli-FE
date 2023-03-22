@@ -58,7 +58,7 @@ export const __addPost = createAsyncThunk(
       // return thunkAPI.fulfillWithValue(response.data);
       return thunkAPI.fulfillWithValue(getData.data);
     } catch (error) {
-      console.log(error, "thunk");
+      console.log(error.response, "thunk");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -149,7 +149,7 @@ export const PostSlice = createSlice({
       console.log(action.payload, "payload");
       state.isLoading = false;
       state.isError = true;
-      state.error = action.payload;
+      state.error = alert(action.payload.message);
     },
     //Detail.jsx - get postlist id
     [__getPostId.pending]: (state, action) => {
