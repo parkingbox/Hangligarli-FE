@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import swal from "sweetalert";
@@ -8,8 +8,6 @@ import { cookies } from "../shared/cookie";
 import Button from "./Button";
 
 function Header() {
-  const [isLogin, setIsLogin] = useState(false);
-
   const nickname = cookies.get("nickname");
   console.log(nickname);
 
@@ -29,22 +27,23 @@ function Header() {
       }
     });
   };
+
   const onLogoutBtn = () => {
     swal({
       title: "로그아웃하시겠습니까?",
-      text: "OK 누를시 로그인 페이지로 이동합니다.",
       icon: "warning",
       buttons: true,
     }).then(willLogin => {
       if (willLogin) {
         cookies.remove("token");
         cookies.remove("nickname");
-        setIsLogin(true);
+        window.location.reload();
       } else {
         swal("비회원은 글작성이 제한됩니다.");
       }
     });
   };
+
   const onWriteBtn = () => {
     swal({
       title: "글작성 페이지로 이동합니다.",
@@ -72,7 +71,6 @@ function Header() {
         if (willLogin) {
           cookies.remove("token");
           cookies.remove("nickname");
-          setIsLogin(true)
           swal("이용해 주셔서 감사합니다.");
           navigate("/");
         }
