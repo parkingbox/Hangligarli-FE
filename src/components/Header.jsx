@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import swal from "sweetalert";
-import apis, { api } from "../api/api";
+import { api } from "../api/api";
 
 import { cookies } from "../shared/cookie";
 import Button from "./Button";
 
-function Header({ nickname }) {
+function Header() {
   const [isLogin, setIsLogin] = useState(false);
-  const navigate = useNavigate();
 
-  const memberSecede = cookies.get("nickname");
-  console.log(memberSecede);
+  const nickname = cookies.get("nickname");
+  console.log(nickname);
+
+  const navigate = useNavigate();
   const onLoginBtn = () => {
     cookies.remove("token");
     swal({
@@ -56,22 +57,29 @@ function Header({ nickname }) {
       }
     });
   };
+
   const onSecedeBtn = async () => {
     try {
-      await api.delete("/api/users/unregister/", {
-        memberSecede: memberSecede,
+      await api.delete("/api/users/unregister", {
+        data: {
+          nickname: nickname,
+        },
       });
       swal({
         title: "확인을 누르면 계정이 탈퇴됩니다.",
         buttons: true,
       }).then(willLogin => {
         if (willLogin) {
+          cookies.remove("token");
+          cookies.remove("nickname");
+          setIsLogin(true)
           swal("이용해 주셔서 감사합니다.");
-          navigate("/login");
+          navigate("/");
         }
       });
     } catch (e) {}
   };
+
   return (
     <Navbar>
       <div>

@@ -82,7 +82,7 @@ export const __updatePost = createAsyncThunk(
         `api/posts/update/${payload.id}`,
         payload
       );
-      console.log(response.data, "response.data");
+
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -96,6 +96,7 @@ export const __deletePost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await apis.delete(`/api/posts/delete/${payload}`);
+
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -159,7 +160,6 @@ export const PostSlice = createSlice({
       state.isError = false;
     },
     [__updatePost.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.isLoading = false;
       state.isError = false;
     },

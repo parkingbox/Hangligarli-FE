@@ -15,7 +15,6 @@ function Detail() {
   const { isLoading, error, posts, post } = useSelector(state => {
     return state.posts;
   });
-  console.log(post, "post");
 
   const { id } = useParams();
 
