@@ -36,6 +36,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
+      console.log(res);
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });
@@ -44,7 +45,7 @@ function Login() {
       cookies.set("nickname", payload.auth, {
         path: "/",
       });
-      
+
       navigate("/");
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
