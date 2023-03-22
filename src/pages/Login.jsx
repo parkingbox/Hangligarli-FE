@@ -8,7 +8,6 @@ import jwt_decode from "jwt-decode";
 import { api } from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
 
 function Login() {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ function Login() {
     username: "",
     password: "",
   });
-
+  console.log(user.name);
   const fetchTodos = async () => {
     const { data } = await api.get("api/posts/list");
     setUser(data);

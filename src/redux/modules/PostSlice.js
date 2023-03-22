@@ -195,7 +195,6 @@ export const PostSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.posts = state.posts.filter(list => list.id !== action.payload);
-      // state.posts = action.payload;
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
