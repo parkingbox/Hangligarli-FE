@@ -2,28 +2,43 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
 import { __getPostId, __deletePost } from "../redux/modules/PostSlice";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { cookies } from "../shared/cookie";
 
 function Detail() {
+  const access = cookies.get("nickname");
+  console.log(access);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, error, post } = useSelector((state) => {
+  const { isLoading, error, posts, post } = useSelector(state => {
     return state.posts;
   });
+  console.log(post, "post");
 
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(__getPostId(id));
-  }, [dispatch, id]);
+  }, []);
 
-  const onClickDeleteHandler = (id) => {
-    dispatch(__deletePost(id));
-    alert("삭제되었습니다!");
-    navigate("/");
+  const onClickAccessHandler = () => {
+    if (access == post.nickname) {
+      navigate("/update");
+    } else if (access !== post.nickname || undefined) {
+      alert("수정 권한이 없습니다.");
+    }
+  };
+
+  const onClickDeleteHandler = id => {
+    if (access == post.nickname) {
+      dispatch(__deletePost(id));
+      alert("삭제되었습니다!");
+      navigate("/");
+    } else if (access !== post.nickname || undefined) {
+      alert("삭제 권한이 없습니다.");
+    }
   };
 
   if (isLoading) {
@@ -36,10 +51,11 @@ function Detail() {
 
   return (
     <>
-      <Link to={"/"}>홈 - header로 바꾸기</Link>
+      <HomeLinkDiv>
+        <StHomeLink to={"/"}>홈으로</StHomeLink>
+      </HomeLinkDiv>
       <StDetailComponentLayout>
         <StDetailComponent>
-          {/* <div>{id}: 확인용.없앨예정</div> */}
           <StDetailGameInfo>
             <StDetailImg>
               <img
@@ -58,9 +74,7 @@ function Detail() {
                 </div>
               </DetailLevelTimePerson>
               <DetailBtn>
-                <Link to={"/update"} key={post.id}>
-                  <Button>수정하기</Button>
-                </Link>
+                <Button onClick={onClickAccessHandler}>수정하기</Button>
                 <Button onClick={() => onClickDeleteHandler(id)}>
                   삭제하기
                 </Button>
@@ -78,6 +92,22 @@ function Detail() {
 }
 
 export default Detail;
+
+const HomeLinkDiv = styled.div`
+  height: 70px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const StHomeLink = styled(Link)`
+  font-size: 14px;
+  text-decoration: none;
+  color: #6e6d6dd6;
+  border: 1px solid #6e6d6d8c;
+  border-radius: 10px;
+  padding: 5px;
+`;
 
 const StDetailComponentLayout = styled.div`
   @font-face {

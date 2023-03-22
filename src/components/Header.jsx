@@ -20,7 +20,7 @@ function Header({ nickname }) {
       text: "OK 누를시 로그인 페이지로 이동합니다.",
       icon: "warning",
       buttons: true,
-    }).then((willLogin) => {
+    }).then(willLogin => {
       if (willLogin) {
         navigate("/login");
       } else {
@@ -34,7 +34,7 @@ function Header({ nickname }) {
       text: "OK 누를시 로그인 페이지로 이동합니다.",
       icon: "warning",
       buttons: true,
-    }).then((willLogin) => {
+    }).then(willLogin => {
       if (willLogin) {
         cookies.remove("token");
         cookies.remove("nickname");
@@ -48,7 +48,7 @@ function Header({ nickname }) {
     swal({
       title: "글작성 페이지로 이동합니다.",
       buttons: true,
-    }).then((willLogin) => {
+    }).then(willLogin => {
       if (willLogin) {
         navigate("/post");
       } else {
@@ -64,7 +64,7 @@ function Header({ nickname }) {
       swal({
         title: "확인을 누르면 계정이 탈퇴됩니다.",
         buttons: true,
-      }).then((willLogin) => {
+      }).then(willLogin => {
         if (willLogin) {
           swal("이용해 주셔서 감사합니다.");
           navigate("/login");
@@ -101,7 +101,7 @@ function Header({ nickname }) {
             <Button
               style={{
                 height: "40px",
-                width: "60px",
+                width: "70px",
                 backgroundColor: "#605549",
                 border: "none",
                 color: "#fff",
@@ -113,7 +113,7 @@ function Header({ nickname }) {
             <Button
               style={{
                 height: "40px",
-                width: "60px",
+                width: "70px",
                 backgroundColor: "#605549",
                 border: "none",
                 color: "#fff",
@@ -125,7 +125,7 @@ function Header({ nickname }) {
             <Button
               style={{
                 height: "40px",
-                width: "60px",
+                width: "70px",
                 backgroundColor: "#605549",
                 border: "none",
                 color: "#fff",

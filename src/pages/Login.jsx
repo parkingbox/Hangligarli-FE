@@ -8,7 +8,6 @@ import jwt_decode from "jwt-decode";
 import { api } from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
 
 function Login() {
   const navigate = useNavigate();
@@ -26,14 +25,14 @@ function Login() {
     fetchTodos();
   }, []);
 
-  const changeInputHandler = (event) => {
+  const changeInputHandler = event => {
     const { value, name } = event.target;
-    setUser((old) => {
+    setUser(old => {
       return { ...old, [name]: value };
     });
   };
 
-  const onSunmitHandler = async (e) => {
+  const onSunmitHandler = async e => {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
@@ -137,7 +136,7 @@ function Login() {
                   title: "메인페이지로 이동하시겠습니까?",
                   text: "OK 누를시 메인 페이지로 이동합니다.",
                   buttons: true,
-                }).then((willLogin) => {
+                }).then(willLogin => {
                   if (willLogin) {
                     navigate("/");
                   } else {
@@ -193,7 +192,7 @@ function Login() {
                   title: "아직 회원이 아니신가요?",
                   text: "OK 누를시 회원가입 페이지로 이동합니다.",
                   buttons: true,
-                }).then((willSign) => {
+                }).then(willSign => {
                   if (willSign) {
                     navigate("/signup");
                   } else {

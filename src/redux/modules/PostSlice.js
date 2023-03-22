@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apis, { api } from "../../api/api";
-// import { axios } from "axios";
 
 const initialState = {
   posts: [],
@@ -19,6 +18,7 @@ const initialState = {
     content: "",
   },
 };
+
 //get postList - Home
 export const __getPostList = createAsyncThunk(
   "getPostList",
@@ -36,7 +36,6 @@ export const __getPostList = createAsyncThunk(
 export const __addPost = createAsyncThunk(
   "addPost",
   async (payload, thunkAPI) => {
-    console.log(payload, ": payload");
     try {
       const response = await apis.post("api/posts/", {
         title: payload.title,
@@ -54,11 +53,8 @@ export const __addPost = createAsyncThunk(
       //response.data로 저장된 data를 받아와야하는데 못 함
       // 따라서 fulfillWithValue 전에 get 요청하여 덮어주기
       const getData = await api.get("api/posts/list");
-      // console.log(getData.data, "getData");
-      // return thunkAPI.fulfillWithValue(response.data);
       return thunkAPI.fulfillWithValue(getData.data);
     } catch (error) {
-      console.log(error.response, "thunk");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -68,7 +64,6 @@ export const __addPost = createAsyncThunk(
 export const __getPostId = createAsyncThunk(
   "getPostId",
   async (payload, thunkAPI) => {
-    // console.log(payload);
     try {
       const response = await api.get(`api/posts/detail/${payload}`);
       return thunkAPI.fulfillWithValue(response.data.data);
@@ -83,19 +78,14 @@ export const __updatePost = createAsyncThunk(
   "updatePost",
   async (payload, thunkAPI) => {
     try {
-      const response = await apis.put(`api/posts/update/${payload.id}`, {
-        // id: payload.id,
-        title: payload.title,
-        level: payload.level,
-        time: payload.time,
-        minperson: payload.minperson,
-        maxperson: payload.maxperson,
-        image: payload.image,
-        content: payload.content,
-      });
+      const response = await apis.put(
+        `api/posts/update/${payload.id}`,
+        payload
+      );
+      console.log(response.data, "response.data");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -104,12 +94,11 @@ export const __updatePost = createAsyncThunk(
 export const __deletePost = createAsyncThunk(
   "deletePost",
   async (payload, thunkAPI) => {
-    // console.log(payload, ": payload");
     try {
       await apis.delete(`/api/posts/delete/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -143,10 +132,8 @@ export const PostSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.posts = action.payload;
-      // state.posts = [...state.posts, ...action.payload];
     },
     [__addPost.rejected]: (state, action) => {
-      console.log(action.payload, "payload");
       state.isLoading = false;
       state.isError = true;
       state.error = alert(action.payload.message);
@@ -172,16 +159,14 @@ export const PostSlice = createSlice({
       state.isError = false;
     },
     [__updatePost.fulfilled]: (state, action) => {
+      console.log(action.payload);
       state.isLoading = false;
       state.isError = false;
-      //state.posts = 서버에서 put으로 data가 수정되고,
-      //detail page로 가면 get을 이미 하고 있기때문에
-      //reducer에서 별도의 설정 하지 않아도 됨.
     },
     [__updatePost.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.error = action.payload;
+      state.error = alert(action.payload.message);
     },
     //Detail.jsx - delete
     [__deletePost.pending]: (state, action) => {
@@ -189,18 +174,14 @@ export const PostSlice = createSlice({
       state.isError = false;
     },
     [__deletePost.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      console.log(current(state));
-      console.log(current(state.posts));
       state.isLoading = false;
       state.isError = false;
-      state.posts = state.posts.filter(list => list.id !== action.payload);
-      // state.posts = action.payload;
+      state.posts = state.posts.data.filter(list => list.id !== action.payload);
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.error = action.payload;
+      state.error = alert(action.payload.message);
     },
   },
 });
