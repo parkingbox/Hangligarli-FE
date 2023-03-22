@@ -66,8 +66,15 @@ function SignUp() {
       };
       const res = await api.post("/api/users/signup", user);
       if (res.data.statusCode === 200) {
-        swal({ title: res.data.message, icon: "success", button: "확인" });
-        navigate("/login");
+        swal({
+          title: "회원가입을 하시겠습니까?",
+          text: "OK 누를시 로그인 페이지로 이동합니다.",
+          buttons: true,
+        }).then((willSign) => {
+          if (willSign) {
+            navigate("/login");
+          }
+        });
       }
     } catch (e) {
       swal(e);
@@ -82,9 +89,7 @@ function SignUp() {
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
     if (!idReg.test(e.target.value)) {
-      setUsernameMessage(
-        "영 대소문자, 숫자, 입력, 4글자 이상 12글자 미만으로 입력"
-      );
+      setUsernameMessage("영 대소문자,숫자 4글자 이상 12글자 미만으로 입력");
       setIsUsername(false);
     } else {
       setUsernameMessage("올바른 ID 형식입니다.");
@@ -143,14 +148,14 @@ function SignUp() {
         username: username,
       });
       if (username === "") {
-        alert("아이디를 입력해주세요");
+        swal("아이디를 입력해주세요");
       } else if (!idCheck(username)) {
-        alert("아이디를 확인해주세요");
+        swal("아이디를 확인해주세요");
       } else {
-        alert("사용가능한 아이디입니다.");
+        swal("사용가능한 아이디입니다.");
       }
     } catch (error) {
-      alert("중복된 아이디입니다.");
+      swal("중복된 아이디입니다.");
     }
   };
 
@@ -161,14 +166,14 @@ function SignUp() {
         nickname: nickname,
       });
       if (nickname === "") {
-        alert("닉네임를 입력해주세요");
+        swal("닉네임를 입력해주세요");
       } else if (!nameCheck(nickname)) {
-        alert("닉네임을 확인해주세요.");
+        swal("닉네임을 확인해주세요.");
       } else {
-        alert("사용가능한 닉네임입니다.");
+        swal("사용가능한 닉네임입니다.");
       }
     } catch (error) {
-      alert("중복된 닉네임입니다.");
+      swal("중복된 닉네임입니다.");
     }
   };
 
@@ -189,9 +194,16 @@ function SignUp() {
           alignItems: "center",
         }}
       >
-        <SignInWrapper>하이</SignInWrapper>
+        <SignInWrapper>
+          <h1>Welcome Back!</h1>
+          <p style={{ textAlign: "center" }}>
+            Welcome To keep connected with us please
+            <br />
+            login with your personal info
+          </p>
+        </SignInWrapper>
         <FormWrap onSubmit={onSubmitHandler}>
-          <h1 style={{ marginBottom: "30px" }}>Sign Up</h1>
+          <h1 style={{ marginBottom: "30px" }}>회원가입</h1>
           <InputsWrapper>
             <InputWrap>
               <Input
@@ -204,7 +216,6 @@ function SignUp() {
                   margin: "5px 0 5px 0",
                   position: "relative",
                   backgroundColor: "#EEEEEE",
-                  position: "relative",
                   border: "none",
                 }}
                 onChange={onChangeUsername}
@@ -214,8 +225,10 @@ function SignUp() {
                   margin: "5px",
                   width: "50px",
                   height: "40px",
+
+                  color: "#fff",
                   boxShadow:
-                    "0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)",
+                    "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
                   backgroundColor: "#E6A15B",
                   position: "absolute",
                   border: "none",
@@ -253,6 +266,8 @@ function SignUp() {
                   width: "50px",
                   height: "40px",
                   backgroundColor: "#E6A15B",
+                  border: "none",
+                  color: "#fff",
                   boxShadow:
                     "0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)",
                   position: "absolute",
@@ -333,25 +348,45 @@ function SignUp() {
                   height: "50px",
                   borderRadius: "15px",
                   border: "none",
-                  backgroundColor: "#EEEEEE",
-                  color: "gray",
+                  backgroundColor: "#E6A15B",
+                  color: "#fff",
+                  boxShadow:
+                    "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
                 }}
                 type="button"
-                onClick={() => navigate("/login")}
+                onClick={() => {
+                  swal({
+                    text: "OK 누를시 로그인 페이지로 이동합니다.",
+                    buttons: true,
+                  }).then((willSign) => {
+                    if (willSign) {
+                      navigate("/login");
+                    } else {
+                      swal("비회원은 기능이 제한됩니다.");
+                    }
+                  });
+                }}
               >
-                BEFORE
+                이전으로
               </Button>
               <Button
                 style={{
                   height: "50px",
                   borderRadius: "15px",
                   border: "none",
-                  color: "#fff",
-                  backgroundColor: "#E6A15B",
+                  boxShadow:
+                    "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
                 }}
                 disabled={
                   !(isUsername && isNickname && isPassword && isCheckPassword)
                 }
+                onClick={() => {
+                  swal({
+                    title: "회원가입을 하시겠습니까?",
+                    text: "OK 누를시 로그인 페이지로 이동합니다.",
+                    buttons: true,
+                  });
+                }}
               >
                 회원가입
               </Button>
@@ -398,7 +433,7 @@ const CorrectComment = styled.p`
 const WrongComment = styled.p`
   top: 95px;
   margin: 0;
-  font-size: 13px;
+  font-size: 10px;
   color: #db3333;
 `;
 

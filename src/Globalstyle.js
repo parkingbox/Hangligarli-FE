@@ -4,10 +4,11 @@ const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
   }
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
 
   body {
     margin: 0;
-    font-family: "Helvetica", "Arial", sans-serif;
+    font-family: "Arial", sans-serif;
     line-height: 1.5;
   }
 `;
