@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
-import apis, { api } from "../api/api";
+import { api } from "../api/api";
 import { cookies } from "../shared/cookie";
 
 function SignUp() {

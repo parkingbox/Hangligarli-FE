@@ -13,7 +13,6 @@ function Detail() {
   const { isLoading, error, post } = useSelector((state) => {
     return state.posts;
   });
-
   const { id } = useParams();
 
   useEffect(() => {

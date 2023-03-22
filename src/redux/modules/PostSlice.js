@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apis, { api } from "../../api/api";
 // import { axios } from "axios";
 
@@ -82,6 +82,7 @@ export const __getPostId = createAsyncThunk(
 export const __updatePost = createAsyncThunk(
   "updatePost",
   async (payload, thunkAPI) => {
+    console.log("업데이트", payload);
     try {
       const response = await apis.put(`api/posts/update/${payload.id}`, {
         // id: payload.id,
@@ -93,6 +94,7 @@ export const __updatePost = createAsyncThunk(
         image: payload.image,
         content: payload.content,
       });
+
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -107,6 +109,7 @@ export const __deletePost = createAsyncThunk(
     // console.log(payload, ": payload");
     try {
       await apis.delete(`/api/posts/delete/${payload}`);
+
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -189,12 +192,9 @@ export const PostSlice = createSlice({
       state.isError = false;
     },
     [__deletePost.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      console.log(current(state));
-      console.log(current(state.posts));
       state.isLoading = false;
       state.isError = false;
-      state.posts = state.posts.filter(list => list.id !== action.payload);
+      state.posts = state.posts.filter((list) => list.id !== action.payload);
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;

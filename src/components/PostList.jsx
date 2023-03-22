@@ -10,7 +10,7 @@ function PostList() {
   const { isLoading, error, posts } = useSelector(state => {
     return state.posts;
   });
-  // console.log(posts);
+  console.log(posts);
   useEffect(() => {
     dispatch(__getPostList());
   }, [dispatch]);
