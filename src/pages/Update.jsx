@@ -15,7 +15,7 @@ function Update() {
   const { post } = useSelector(state => {
     return state.posts;
   });
-  
+
   const [updatePost, setUpdatePost] = useState({
     title: "",
     level: "",
@@ -59,7 +59,9 @@ function Update() {
 
   const onSubmitHandler = event => {
     dispatch(__updatePost({ ...updatePost }));
-      //input값 초기화
+    alert("수정 완료하였습니다!");
+    navigate(`/detail/${post.id}`);
+    //input값 초기화
     setUpdatePost({
       id: 0,
       title: "",
