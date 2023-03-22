@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import swal from "sweetalert";
-import apis, { api } from "../api/api";
+import { api } from "../api/api";
 
 import { cookies } from "../shared/cookie";
 import Button from "./Button";
 
 function Header() {
-
   const [isLogin, setIsLogin] = useState(false);
-  
+
   const nickname = cookies.get("nickname");
   console.log(nickname);
 

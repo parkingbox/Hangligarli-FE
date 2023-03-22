@@ -5,14 +5,21 @@ import Button from "./../components/Button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { cookies } from "../shared/cookie";
+import swal from "sweetalert";
 
 function Update() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const access = cookies.get('nickname');
+  console.log(access);
+
+
   const { post } = useSelector((state) => {
     return state.posts;
   });
-
+  
   const [updatePost, setUpdatePost] = useState({
     title: "",
     level: "",
@@ -56,10 +63,7 @@ function Update() {
 
   const onSubmitHandler = event => {
     dispatch(__updatePost({ ...updatePost }));
-    alert("수정되었습니다!");
-    navigate(`/detail/${post.id}`);
-
-    //input값 초기화
+      //input값 초기화
     setUpdatePost({
       id: 0,
       title: "",
