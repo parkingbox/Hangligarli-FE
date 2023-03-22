@@ -9,7 +9,6 @@ import Button from "./Button";
 
 function Header() {
   const nickname = cookies.get("nickname");
-  console.log(nickname);
 
   const navigate = useNavigate();
   const onLoginBtn = () => {
@@ -48,6 +47,7 @@ function Header() {
     swal({
       title: "글작성 페이지로 이동합니다.",
       buttons: true,
+
     }).then(willLogin => {
       if (willLogin) {
         navigate("/post");

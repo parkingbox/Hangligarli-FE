@@ -16,7 +16,6 @@ function Login() {
     username: "",
     password: "",
   });
-  console.log(user.name);
   const fetchTodos = async () => {
     const { data } = await api.get("api/posts/list");
     setUser(data);
@@ -36,17 +35,18 @@ function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/login", user);
-      console.log(res);
+
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });
-
+      
       const payload = jwt_decode(res.headers.authorization.substr(7));
       cookies.set("nickname", payload.auth, {
         path: "/",
       });
 
       navigate("/");
+
       if (res.data.statusCode === 200) {
         swal({ title: res.data.message, icon: "success", button: "확인" });
       }

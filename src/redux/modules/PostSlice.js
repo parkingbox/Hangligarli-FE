@@ -45,10 +45,12 @@ export const __addPost = createAsyncThunk(
         maxperson: payload.maxperson,
         image: payload.image,
         content: payload.content,
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
       });
       if (response.status === 200) {
         alert("작성되었습니다!");
-        window.location = "/";
       }
       //response.data로 저장된 data를 받아와야하는데 못 함
       // 따라서 fulfillWithValue 전에 get 요청하여 덮어주기
@@ -80,7 +82,12 @@ export const __updatePost = createAsyncThunk(
     try {
       const response = await apis.put(
         `api/posts/update/${payload.id}`,
-        payload
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${payload.token}`,
+          },
+        }
       );
 
       return thunkAPI.fulfillWithValue(response.data);
@@ -95,7 +102,11 @@ export const __deletePost = createAsyncThunk(
   "deletePost",
   async (payload, thunkAPI) => {
     try {
-      await apis.delete(`/api/posts/delete/${payload}`);
+      await apis.delete(`/api/posts/delete/${payload}`, {
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
+      });
 
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
@@ -176,7 +187,9 @@ export const PostSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.posts = state.posts.data.filter(list => list.id !== action.payload);
+      state.posts = state.posts.data.filter(
+        (list) => list.id !== action.payload
+      );
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;

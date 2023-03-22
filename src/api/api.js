@@ -7,6 +7,7 @@ export const api = axios.create({ baseURL: process.env.REACT_APP_API });
 //2. 로그인 후 "쿠키에는" 토큰이 저장되어있음.
 //3. 로그인 후 쿠키에 저장시킨 토큰을 get해오는 로직이 없음.
 
+
 export const apis = axios.create({
   baseURL: process.env.REACT_APP_API,
   headers: {
@@ -24,3 +25,9 @@ apis.interceptors.request.use(config => {
 });
 
 export default apis;
+
+
+//export const apis = axios.create({ baseURL: process.env.REACT_APP_API });
+
+//export default apis;
+
