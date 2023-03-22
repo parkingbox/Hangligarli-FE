@@ -126,9 +126,24 @@ function Login() {
                 border: "none",
                 width: "95px",
                 backgroundColor: "#EEEEEE",
+                boxShadow:
+                  "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
                 color: "gray",
               }}
-              onClick={() => navigate("/")}
+              onClick={() => {
+                swal({
+                  title: "메인페이지로 이동하시겠습니까?",
+                  text: "OK 누를시 메인 페이지로 이동합니다.",
+                  buttons: true,
+                }).then((willLogin) => {
+                  if (willLogin) {
+                    navigate("/");
+                  } else {
+                    swal("비회원은 기능이 제한 됩니다.");
+                  }
+                });
+              }}
+              type="button"
             >
               Home
             </Button>
@@ -140,6 +155,8 @@ function Login() {
                 border: "none",
                 color: "#fff",
                 backgroundColor: "#E6A15B",
+                boxShadow:
+                  "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
               }}
             >
               Sign In
@@ -171,6 +188,8 @@ function Login() {
                 color: "#fff",
                 borderRadius: "20px",
                 height: "40px",
+                boxShadow:
+                  "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
               }}
               onClick={() => {
                 swal({
