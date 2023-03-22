@@ -32,9 +32,10 @@ function Login() {
   };
 
   const onSunmitHandler = async e => {
-     e.preventDefault();
-     try {
-      const res =  await api.post("/api/users/login", user);
+    e.preventDefault();
+    try {
+      const res = await api.post("/api/users/login", user);
+
       cookies.set("token", res.headers.authorization.substr(7), {
         path: "/",
       });
@@ -43,7 +44,7 @@ function Login() {
       cookies.set("nickname", payload.auth, {
         path: "/",
       });
-      
+
       navigate("/");
 
       if (res.data.statusCode === 200) {
