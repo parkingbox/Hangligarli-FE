@@ -7,25 +7,28 @@ import useInput from "../hooks/useInput";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { cookies } from "../shared/cookie";
 
 function Post() {
+  const token = cookies.get("token");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //time
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
-  const onChangeHourHandler = e => {
+  const onChangeHourHandler = (e) => {
     setHour(e.target.value);
   };
-  const onChangeMinuteHandler = e => {
+  const onChangeMinuteHandler = (e) => {
     setMinute(e.target.value);
   };
   const time = hour * Number(60) + Number(minute);
 
   //image
   const [image, setImage] = useState("");
-  const onChangeImageHandler = e => {
+  const onChangeImageHandler = (e) => {
     e.preventDefault();
     setImage(e.target.value);
   };
@@ -55,10 +58,11 @@ function Post() {
       maxperson,
       image,
       content,
+      token,
     });
-  }, [title, level, time, image, minperson, maxperson, content]);
+  }, [title, level, time, image, minperson, maxperson, content, token]);
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
     dispatch(__addPost({ ...post }));
     setPost({
@@ -69,6 +73,7 @@ function Post() {
       maxperson,
       image,
       content,
+      token,
     });
     navigate("/");
   };
