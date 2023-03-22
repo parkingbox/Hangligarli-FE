@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { __getPostList } from "../redux/modules/PostSlice";
 import styled from "styled-components";
-// import { api } from "../api/api";
 
 function PostList() {
   const dispatch = useDispatch();
   const { isLoading, error, posts } = useSelector(state => {
     return state.posts;
   });
-  console.log(posts);
+
   useEffect(() => {
     dispatch(__getPostList());
   }, [dispatch]);
@@ -35,7 +34,7 @@ function PostList() {
             <StPostComponent key={post.id}>
               <div>
                 <img
-                  style={{ width: "250px", height: "250px" }}
+                  style={{ width: "225px", height: "225px" }}
                   src={post.image}
                   alt="게임 이미지"
                 />
@@ -65,6 +64,7 @@ const StPostListComponents = styled.div`
     font-style: normal;
   }
 
+  margin-top: 40px;
   font-family: "TheJamsil5Bold";
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { __addPost } from "../redux/modules/PostSlice";
 import Button from "./../components/Button";
 import Input from "./../components/Input";
@@ -11,15 +11,6 @@ import styled from "styled-components";
 function Post() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { posts } = useSelector(state => {
-  //   return state.posts;
-  // });
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     alert(`${isError.message}`);
-  //   }
-  // }, [isError]);
 
   //time
   const [hour, setHour] = useState("");
@@ -46,7 +37,6 @@ function Post() {
   const [content, onChangeContentHandler] = useInput("");
 
   const [post, setPost] = useState({
-    // id: 0,
     title: "",
     level: "",
     time: "",
@@ -80,13 +70,14 @@ function Post() {
       image,
       content,
     });
-    // alert("작성되었습니다!");
     navigate("/");
   };
 
   return (
     <>
-      <Link to={"/"}>홈 - header로 변경</Link>
+      <HomeLinkDiv>
+        <StHomeLink to={"/"}>홈으로</StHomeLink>
+      </HomeLinkDiv>
       <StPostComponentLayout>
         <PostComponentHead>게시글 작성</PostComponentHead>
         <StPostComponent>
@@ -194,6 +185,22 @@ function Post() {
 }
 
 export default Post;
+
+const HomeLinkDiv = styled.div`
+  height: 70px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const StHomeLink = styled(Link)`
+  font-size: 14px;
+  text-decoration: none;
+  color: #6e6d6dd6;
+  border: 1px solid #6e6d6d8c;
+  border-radius: 10px;
+  padding: 5px;
+`;
 
 const StPostComponentLayout = styled.div`
   @font-face {

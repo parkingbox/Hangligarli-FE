@@ -12,11 +12,7 @@ function Update() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const access = cookies.get('nickname');
-  console.log(access);
-
-
-  const { post } = useSelector((state) => {
+  const { post } = useSelector(state => {
     return state.posts;
   });
   
@@ -34,10 +30,10 @@ function Update() {
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
 
-  const onChangeHourHandler = (e) => {
+  const onChangeHourHandler = e => {
     setHour(e.target.value);
   };
-  const onChangeMinuteHandler = (e) => {
+  const onChangeMinuteHandler = e => {
     setMinute(e.target.value);
   };
 
@@ -78,7 +74,9 @@ function Update() {
 
   return (
     <>
-      <Link to={"/"}>홈 - header로 변경</Link>
+      <HomeLinkDiv>
+        <StHomeLink to={"/"}>홈으로</StHomeLink>
+      </HomeLinkDiv>
       <StPostComponentLayout>
         <PostComponentHead>게시글 수정</PostComponentHead>
         <StPostComponent>
@@ -186,6 +184,23 @@ function Update() {
 }
 
 export default Update;
+
+const HomeLinkDiv = styled.div`
+  height: 70px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const StHomeLink = styled(Link)`
+  font-size: 14px;
+  text-decoration: none;
+  color: #6e6d6dd6;
+  border: 1px solid #6e6d6d8c;
+  border-radius: 10px;
+  padding: 5px;
+`;
+
 const StPostComponentLayout = styled.div`
   @font-face {
     font-family: "NanumSquareNeo-Variable";
