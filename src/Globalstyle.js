@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
 
   body {
     margin: 0;

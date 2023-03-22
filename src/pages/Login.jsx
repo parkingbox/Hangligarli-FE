@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Wrapper from "../components/Wrapper";
 import swal from "sweetalert";
 import jwt_decode from "jwt-decode";
-
 import { api } from "../api/api";
 import { cookies } from "../shared/cookie";
 import { useNavigate } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
 function Login() {
   const navigate = useNavigate();
@@ -77,9 +76,12 @@ function Login() {
           textAlign: "center",
           justifyContent: "center",
           marginTop: "50px",
+          fontSize: "40px",
+          fontFamily: "Gamja Flower",
         }}
       >
-        Welcome to <br /> Hangligarli
+        안녕하세요! <br />
+        항리갈리에 오신걸 환영합니다.
       </h1>
       <Wrapper style={{ justifyContent: "center", alignItems: "center" }}>
         <FormWrap
@@ -171,13 +173,8 @@ function Login() {
               textAlign: "center",
             }}
           >
-            <h1>Hello!</h1>
-            <p>
-              Enter your personal
-              <br /> details and start journey
-              <br />
-              with us
-            </p>
+            <h1>저희 사이트에 방문해주셔서 감사합니다.</h1>
+            <p>아직 회원이 아니신가요?</p>
           </div>
           <div>
             <Button
@@ -230,6 +227,7 @@ const FormWrap = styled.form`
   background-color: #fff;
   color: #979a9f;
 
+  min-height: 350px;
   display: flex;
   width: 20vw;
   min-width: 250px;
@@ -251,7 +249,8 @@ const SignupWrap = styled.div`
   align-items: center;
   height: 50vh;
   width: 20vw;
-  min-width: 250px;
+  min-height: 350px;
+
   background: -moz-linear-gradient(
     48deg,
     rgba(42, 46, 54, 1) 0%,
@@ -279,9 +278,11 @@ const SignupWrap = styled.div`
   border-radius: 0 18px 18px 0;
   h1 {
     color: #fff;
+    font-family: "Single Day";
   }
   & p {
     color: #fff;
+    font-family: "Single Day";
   }
 `;
 
