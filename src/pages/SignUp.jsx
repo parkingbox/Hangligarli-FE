@@ -15,6 +15,8 @@ function SignUp() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [checkId, setCheckId] = useState(false);
+  const [checkName, setCheckName] = useState(false);
 
   // 유효성 검사
   const [isUsername, setIsUsername] = useState(false);
@@ -27,6 +29,8 @@ function SignUp() {
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [checkPasswordMessage, setCheckPasswordMessage] = useState("");
+
+  // onsubmithandler 에서 true가 아니면 회원가입 x
 
   // .test()  정규식과 지정된 문자열 간의 일치 검색을 실행 일치하면 true 불일치 false
   const idCheck = (username) => {
@@ -57,6 +61,9 @@ function SignUp() {
     }
     if (password !== checkPassword) {
       swal("비밀번호가 일치하지 않습니다.");
+    }
+    if (checkId == false && checkName == false) {
+      alert("중복확인이 필요합니다.");
     }
     try {
       let user = {
@@ -153,6 +160,7 @@ function SignUp() {
         swal("아이디를 확인해주세요");
       } else {
         swal("사용가능한 아이디입니다.");
+        setCheckId(true);
       }
     } catch (error) {
       swal("중복된 아이디입니다.");
@@ -171,6 +179,7 @@ function SignUp() {
         swal("닉네임을 확인해주세요.");
       } else {
         swal("사용가능한 닉네임입니다.");
+        setCheckName(true);
       }
     } catch (error) {
       swal("중복된 닉네임입니다.");
@@ -225,7 +234,6 @@ function SignUp() {
                   margin: "5px",
                   width: "50px",
                   height: "40px",
-
                   color: "#fff",
                   boxShadow:
                     "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
@@ -378,7 +386,14 @@ function SignUp() {
                     "0 5px 5px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22)",
                 }}
                 disabled={
-                  !(isUsername && isNickname && isPassword && isCheckPassword)
+                  !(
+                    isUsername &&
+                    isNickname &&
+                    isPassword &&
+                    isCheckPassword &&
+                    checkId == true &&
+                    checkName == true
+                  )
                 }
                 onClick={() => {
                   swal({
