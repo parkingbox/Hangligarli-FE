@@ -9,7 +9,6 @@ import { cookies } from "../shared/cookie";
 
 function Detail() {
   const access = cookies.get("nickname");
-  console.log(access);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, error, posts, post } = useSelector(state => {

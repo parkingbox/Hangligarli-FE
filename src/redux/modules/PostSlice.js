@@ -46,13 +46,13 @@ export const __addPost = createAsyncThunk(
         maxperson: payload.maxperson,
         image: payload.image,
         content: payload.content,
-        headers: {
-          Authorization: `Bearer ${payload.token}`,
-        },
       });
+
       if (response.status === 200) {
         alert("작성되었습니다!");
+        window.location = "/";
       }
+
       //response.data로 저장된 data를 받아와야하는데 못 함
       // 따라서 fulfillWithValue 전에 get 요청하여 덮어주기
       const getData = await api.get("api/posts/list");
@@ -85,7 +85,6 @@ export const __updatePost = createAsyncThunk(
         `api/posts/update/${payload.id}`,
         payload
       );
-      window.location = "/";
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -164,7 +163,7 @@ export const PostSlice = createSlice({
     [__updatePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.posts = state.posts.map(item => {
+      state.posts = state.posts.data.map(item => {
         if (item.id == action.payload.id) {
           return (item = action.payload);
         } else {

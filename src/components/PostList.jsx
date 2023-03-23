@@ -14,8 +14,6 @@ function PostList() {
     dispatch(__getPostList());
   }, [dispatch]);
 
-  // window.location.href = "/";
-
   if (isLoading) {
     return <div>로딩중</div>;
   }
