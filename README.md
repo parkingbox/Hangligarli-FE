@@ -2,7 +2,7 @@
 
 > 학창시절 자주 하던 보드게임을 추천하고 전체적인 설명을 작성하는 사이트입니다.
 
-- URL :
+- URL : [Hangligarli 🏠](http://hangligarli-fe-test.s3-website.ap-northeast-2.amazonaws.com/)
 
 <br/>
 
