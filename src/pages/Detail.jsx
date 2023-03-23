@@ -9,10 +9,9 @@ import { cookies } from "../shared/cookie";
 
 function Detail() {
   const access = cookies.get("nickname");
-  console.log(access);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, error, posts, post } = useSelector(state => {
+  const { isLoading, error, posts, post } = useSelector((state) => {
     return state.posts;
   });
 
@@ -30,7 +29,7 @@ function Detail() {
     }
   };
 
-  const onClickDeleteHandler = id => {
+  const onClickDeleteHandler = (id) => {
     if (access == post.nickname) {
       dispatch(__deletePost(id));
       alert("삭제되었습니다!");
