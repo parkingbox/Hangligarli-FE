@@ -58,9 +58,13 @@ function Update() {
   }, [post]);
 
   const onSubmitHandler = event => {
+    event.preventDefault();
     dispatch(__updatePost({ ...updatePost }));
+
     alert("수정 완료하였습니다!");
-    navigate(`/detail/${post.id}`);
+    navigate("/");
+    window.location = "/";
+
     //input값 초기화
     setUpdatePost({
       id: 0,
