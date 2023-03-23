@@ -35,6 +35,7 @@ function Detail() {
       dispatch(__deletePost(id));
       alert("삭제되었습니다!");
       navigate("/");
+      window.location.reload();
     } else if (access !== post.nickname || undefined) {
       alert("삭제 권한이 없습니다.");
     }

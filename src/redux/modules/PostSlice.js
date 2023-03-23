@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { render } from "@testing-library/react";
 import apis, { api } from "../../api/api";
 
 const initialState = {
@@ -82,14 +83,9 @@ export const __updatePost = createAsyncThunk(
     try {
       const response = await apis.put(
         `api/posts/update/${payload.id}`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${payload.token}`,
-          },
-        }
+        payload
       );
-
+      window.location = "/";
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -102,12 +98,7 @@ export const __deletePost = createAsyncThunk(
   "deletePost",
   async (payload, thunkAPI) => {
     try {
-      await apis.delete(`/api/posts/delete/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${payload.token}`,
-        },
-      });
-
+      await apis.delete(`/api/posts/delete/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -173,6 +164,13 @@ export const PostSlice = createSlice({
     [__updatePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
+      state.posts = state.posts.map(item => {
+        if (item.id == action.payload.id) {
+          return (item = action.payload);
+        } else {
+          return item;
+        }
+      });
     },
     [__updatePost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -187,9 +185,7 @@ export const PostSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.posts = state.posts.data.filter(
-        (list) => list.id !== action.payload
-      );
+      state.posts = state.posts.data.filter(list => list.id !== action.payload);
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
